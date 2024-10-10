@@ -14,7 +14,6 @@ class DoNewFile extends Command<HotelManager> {
   DoNewFile(HotelManager receiver) throws CommandException {
     super(Label.NEW_FILE, receiver);
     _hotelManager = receiver;
-    addStringField("filename", Prompt.newSaveAs());
   }
 
   @Override
