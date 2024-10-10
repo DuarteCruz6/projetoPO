@@ -28,8 +28,8 @@ public class HotelManager{
     if(_hotel.houveAlteracoes()){
       try {
         saveAs(_path);
-      } catch(UnavailableFileException| NullPointerException | MissingFileAssociationException | IOException e){
         _hotel.changeAlteracoes();
+      } catch(UnavailableFileException| NullPointerException | MissingFileAssociationException | IOException e){
         throw new MissingFileAssociationException();
       } 
     }
@@ -47,10 +47,10 @@ public class HotelManager{
    **/
   public void saveAs(String filename) throws FileNotFoundException, MissingFileAssociationException, IOException, UnavailableFileException {
     if(_hotel.houveAlteracoes()){
-      _hotel.changeAlteracoes();
       try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
         oos.writeObject(_hotel);
         _path = filename;
+        _hotel.changeAlteracoes();
       } catch(IOException e){
         throw new UnavailableFileException(filename);
       } 

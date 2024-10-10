@@ -24,7 +24,7 @@ class DoOpenFile extends Command<HotelManager> {
 
   @Override
   protected final void execute() throws CommandException {
-      String filename = stringField("filename");
+      String filenameToOpen = stringField("filename");
       if(_hotelManager.houveAlteracoes()){      
         //se der true é porque houve alterações no hotel, então temos de perguntar ao user se quer guardar antes de sair                           
         Boolean userQuerGuardar = Form.confirm(Prompt.saveBeforeExit());
@@ -32,14 +32,21 @@ class DoOpenFile extends Command<HotelManager> {
           //o user disse que quer guardar
           try {
             _hotelManager.save();
-          } catch (FileNotFoundException e) {
-          } catch (MissingFileAssociationException | IOException e) {
+          } catch (FileNotFoundException | MissingFileAssociationException e) {
+            // caso não estejamos em nenhum ficheiro, então criamos um ficheiro e perguntamos ao user qual o nome, sendo que se guarda neste novo ficheiro
+            String filename = Form.requestString(Prompt.newSaveAs());
+            try {
+              _hotelManager.saveAs(filename);
+            } catch (FileNotFoundException | MissingFileAssociationException | UnavailableFileException e1) {
+            }catch (IOException e1) {
+            }  
+          } catch (IOException e) {
           }      
         }
       }
     
       try {
-          _hotelManager.load(filename);
+          _hotelManager.load(filenameToOpen);
       } catch (UnavailableFileException ex) {
       }
   }
