@@ -98,7 +98,7 @@ public class Hotel implements Serializable {
 
   boolean verificarNomeEspecie(String nomeNovo){
     for(String nomeAtual: _nomeEspecies){
-      if(nomeAtual.equals(nomeNovo)){
+      if(nomeAtual.toLowerCase().equals(nomeNovo.toLowerCase())){
         return false;
       }
     }
@@ -115,7 +115,7 @@ public class Hotel implements Serializable {
 
   boolean verificarIdAnimal(String idNovo){
     for(String idAtual: _idAnimais){
-      if(idAtual.equals(idNovo)){
+      if(idAtual.toLowerCase().equals(idNovo.toLowerCase())){
         return false;
       }
     }
@@ -132,7 +132,7 @@ public class Hotel implements Serializable {
 
   boolean verificarIdVacina(String idNovo){
     for(String idAtual: _idVacinas){
-      if(idAtual.equals(idNovo)){
+      if(idAtual.toLowerCase().equals(idNovo.toLowerCase())){
         return false;
       }
     }
@@ -149,7 +149,7 @@ public class Hotel implements Serializable {
 
   boolean verificarIdHabitat(String idNovo){
     for(String idAtual: _idHabitats){
-      if(idAtual.equals(idNovo)){
+      if(idAtual.toLowerCase().equals(idNovo.toLowerCase())){
         return false;
       }
     }
@@ -166,7 +166,7 @@ public class Hotel implements Serializable {
 
   boolean verificarIdFuncionario(String idNovo){
     for(String idAtual: _idFuncionarios){
-      if(idAtual.equals(idNovo)){
+      if(idAtual.toLowerCase().equals(idNovo.toLowerCase())){
         return false;
       }
     }
@@ -183,7 +183,7 @@ public class Hotel implements Serializable {
 
   boolean verificarIdArvore(String idNovo){
     for(String idAtual: _idArvores){
-      if(idAtual.equals(idNovo)){
+      if(idAtual.toLowerCase().equals(idNovo.toLowerCase())){
         return false;
       }
     }
