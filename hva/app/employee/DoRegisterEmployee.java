@@ -3,6 +3,7 @@ package hva.app.employee;
 import hva.app.exception.DuplicateEmployeeKeyException;
 import hva.core.Hotel;
 import hva.core.exception.FuncionarioJaExiste;
+import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 //FIXME add more imports if needed
@@ -26,7 +27,9 @@ class DoRegisterEmployee extends Command<Hotel> {
       String idFuncionario = stringField("idFuncionario");
       String nome = stringField("nomeFuncionario");
       String tipo = stringField("tipoFuncionario");
-    
+      while(!tipo.equals("TRT") && !tipo.equals("VET")){
+        tipo = Form.requestString(Prompt.employeeType());
+      }
       try {
           _hotel.novoFuncionario(idFuncionario, nome, tipo);
       } catch (FuncionarioJaExiste ex) {

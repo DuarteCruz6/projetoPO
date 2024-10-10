@@ -140,7 +140,8 @@ public class Parser{
       if (components.length == 5) {
         String[] listOfTree = components[4].split(",");
         for (String idArvore : listOfTree){
-          _hotel.plantarArvore(idHabitat, idArvore);
+          _hotel.getArvore(idArvore);
+          _hotel.plantarArvoreExistente(idHabitat, idArvore);
         }
       }
     } catch (HabitatJaExiste e) {

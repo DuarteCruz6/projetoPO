@@ -56,7 +56,9 @@ class DoRegisterAnimal extends Command<Hotel> {
           throw new DuplicateAnimalKeyException(idAnimal);
         } catch (HabitatNaoExiste e) {
           throw new UnknownHabitatKeyException(idHabitat);
-        }
+        } catch (EspecieNaoExiste e) {
+          //nunca irá acontecer
+          }
       }else{                                                            
         try {
           _hotel.novoAnimal(idAnimal, nome, idEspecie, idHabitat);

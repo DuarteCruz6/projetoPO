@@ -255,10 +255,11 @@ public class Hotel implements Serializable {
   }
 
   //Criar especie e animal novos 
-  public void novoAnimal(String idAnimal, String nome, String idEspecie, String idHabitat, String nomeEspecie) throws AnimalJaExiste, HabitatNaoExiste{
+  public void novoAnimal(String idAnimal, String nome, String idEspecie, String idHabitat, String nomeEspecie) throws AnimalJaExiste, HabitatNaoExiste, EspecieNaoExiste{
     if(verificarIdAnimal(idAnimal)){    
-      Habitat habitatAnimal = getHabitat(idHabitat);       
-      Especie especieAnimal = novaEspecie(idEspecie, nomeEspecie);
+      Habitat habitatAnimal = getHabitat(idHabitat); 
+      novaEspecie(idEspecie, nomeEspecie);     
+      Especie especieAnimal = getEspecie(idEspecie);
       Animal newAnimal = new Animal(idAnimal,nome,habitatAnimal,especieAnimal);
       _animais.add(newAnimal);
       especieAnimal.addAnimal();
@@ -267,15 +268,13 @@ public class Hotel implements Serializable {
     }
   }
 
-  public Especie novaEspecie(String id, String nome){
+  public void novaEspecie(String id, String nome){
     if(verificarNomeEspecie(nome)){
       Especie newEspecie = new Especie(id,nome);
       _especies.add(newEspecie);
       newEspecie.addAnimal();
       addIdEspecie(id);
-      return newEspecie;
     }
-    return null;
   }
 
   public Animal getAnimal(String idAnimal) throws AnimalNaoExiste{
@@ -404,13 +403,10 @@ public class Hotel implements Serializable {
     return _habitats;
   }
 
-  public Habitat novoHabitat(String idHabitat, String nome, int area) throws HabitatJaExiste{
+  public void novoHabitat(String idHabitat, String nome, int area) throws HabitatJaExiste{
     if (verificarIdHabitat(idHabitat)){
       Habitat newHabitat = new Habitat(idHabitat,nome,area);
       _habitats.add(newHabitat);
-      return newHabitat;
-    }else{
-      throw new HabitatJaExiste(idHabitat);
     }
   }
 
@@ -489,10 +485,10 @@ public class Hotel implements Serializable {
     }
   }
 
-  public void novaArvore(String idArvore, String nome, int idade, int dificuldadeBase, String tipo)throws ArvoreJaExiste{ //tipo = PERENE ou CADUCA
+  public void novaArvore(String idArvore, String nome, int idade, int dificuldadeBase, String tipo)throws ArvoreJaExiste{ //tipo = PER ou CAD
       if(verificarIdArvore(idArvore)){
         Arvore newArvore;
-        if(tipo.equals("PERENE")){                    //a arvore é perene
+        if(tipo.equals("PER")){                    //a arvore é perene
           newArvore = new Perene(idArvore,nome,dificuldadeBase,_estacao);
           _arvores.add(newArvore);
         }else{                                        //a arvore é caduca                                     
@@ -505,7 +501,7 @@ public class Hotel implements Serializable {
       }
    }
   
-  private Arvore getArvore(String idArvore) throws ArvoreNaoExiste{
+  public Arvore getArvore(String idArvore) throws ArvoreNaoExiste{
     for(Arvore arvore : _arvores){
       if(arvore.getId().equals(idArvore)){
         return arvore;
@@ -513,8 +509,11 @@ public class Hotel implements Serializable {
     }
     throw new ArvoreNaoExiste(idArvore);
   }
-  public void plantarArvore(String idHabitat, String idArvore) throws ArvoreJaExiste, ArvoreNaoExiste, HabitatNaoExiste{ 
-    if(verificarIdArvore(idArvore)){
+
+
+  // Usada para o Parser, pois cria-se primeiro as arvores e só depois se cria o habitat que possui as arvores
+  public void plantarArvoreExistente(String idHabitat, String idArvore) throws ArvoreNaoExiste, HabitatNaoExiste{ 
+    if(!verificarIdArvore(idArvore)){
       Arvore arvore = getArvore(idArvore);
       Habitat habitat = getHabitat(idHabitat);
       habitat.addArvore(arvore);
@@ -522,9 +521,28 @@ public class Hotel implements Serializable {
         changeAlteracoes();
       }
     }else{
-      throw new ArvoreJaExiste(idArvore);
+      throw new ArvoreNaoExiste(idArvore);
     }
  }
+
+ //usada para o plantarArvores, pois cria-se primeiro o habitat e só depois se cria a arvore que vai ser colocada no habitat
+ public void plantarArvoreNaoExistente(String idHabitat, String idArvore, String nome, int idade, int dificuldadeBase, String tipo) throws ArvoreNaoExiste, HabitatNaoExiste{ 
+  if(verificarIdArvore(idArvore)){
+    try {
+      novaArvore(idArvore, nome, idade, dificuldadeBase, tipo);
+    } catch (ArvoreJaExiste e) {
+      // nunca ira acontecer
+    }
+    Arvore arvore = getArvore(idArvore);
+    Habitat habitat = getHabitat(idHabitat);
+    habitat.addArvore(arvore);
+    if(!_alteracoes){
+      changeAlteracoes();
+    }
+  }else{
+    throw new ArvoreNaoExiste(idArvore);
+  }
+}
 
   public ArrayList <Arvore> getArvoresHabitat(Habitat habitat){
     return habitat.getArvores();

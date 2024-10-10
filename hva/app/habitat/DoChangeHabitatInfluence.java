@@ -5,6 +5,7 @@ import hva.app.exception.UnknownSpeciesKeyException;
 import hva.core.Hotel;
 import hva.core.exception.EspecieNaoExiste;
 import hva.core.exception.HabitatNaoExiste;
+import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 //FIXME add more imports if needed
@@ -25,10 +26,14 @@ class DoChangeHabitatInfluence extends Command<Hotel> {
   
   @Override
   protected void execute() throws CommandException {
-      String idEspecie = stringField("idEspecie");
-      String idHabitat = stringField("idHabitat");
-      String influenciaHabitat = stringField("influenciaHabitat");
-    
+    String idEspecie = stringField("idEspecie");
+    String idHabitat = stringField("idHabitat");
+    String influenciaHabitat = stringField("influenciaHabitat");
+
+    while(!influenciaHabitat.equals("POS") && !influenciaHabitat.equals("NEG") && !influenciaHabitat.equals("NEU")){
+      influenciaHabitat = Form.requestString(Prompt.habitatInfluence());
+    }
+      
     try {
       _hotel.mudarInfluenciaHabitatEspecie(idHabitat, idEspecie, influenciaHabitat);
     } catch (HabitatNaoExiste e) {
