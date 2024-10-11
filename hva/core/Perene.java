@@ -4,7 +4,7 @@ package hva.core;
 //Arvore class son
 
 public class Perene extends Arvore{
-    //specific attributes to the perene's trees
+    //specific attributes of perenes trees
     private final int[] _esforcoSazonal = {1,1,1,2};
     private final String[] _cicloBiologico = {"GERARFOLHAS","COMFOLHAS","COMFOLHAS","LARGARFOLHAS"};
 

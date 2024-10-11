@@ -51,6 +51,7 @@ public class Animal implements Serializable,Comparable<Animal>{
         //gets the habitat's adequation to the species
         satisfacao+= getAdequacaoHabitat();
 
+        //returns the satisfaction
         return satisfacao;
     }
 

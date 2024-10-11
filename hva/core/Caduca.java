@@ -4,7 +4,7 @@ package hva.core;
 //Arvore class son
 
 public class Caduca extends Arvore{
-    //specific attributes to the caduca's trees
+    //specific attributes of caducas trees
     private final int[] _esforcoSazonal = {1,2,5,0};
     private final String[] _cicloBiologico = {"GERARFOLHAS","COMFOLHAS","LARGARFOLHAS","SEMFOLHAS"};
 
