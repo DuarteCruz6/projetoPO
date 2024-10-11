@@ -25,9 +25,7 @@ public class HotelManager{
    * @throws IOException if there is some error while serializing the state of the network to disk.
    **/
   public void save() throws FileNotFoundException, MissingFileAssociationException, IOException {
-    System.out.println("ESTA NO SAVE");
     if(_hotel.houveAlteracoes()){
-      System.out.println("ESTA A IR BEM");
       try {
         saveAs(_path);
         _hotel.changeAlteracoes();
@@ -35,7 +33,6 @@ public class HotelManager{
         throw new MissingFileAssociationException();
       } 
     }
-    System.out.println("NÃO HOUVE ALTERACOES");
   }
   
   /**
