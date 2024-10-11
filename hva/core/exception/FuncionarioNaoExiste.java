@@ -3,7 +3,7 @@ package hva.core.exception;
 import java.io.Serial;
 
 /**
- * Class for representing an problem occuring during the parsing of an import file.
+* Class for representing an problem occuring during obtaining an employee that supposedly exists, but actually doesn't
  */
 public class FuncionarioNaoExiste extends Exception {
 
@@ -11,7 +11,7 @@ public class FuncionarioNaoExiste extends Exception {
   private static final long serialVersionUID = 202407081733L;
   
   /**
-   * @param idFuncionario name of the import file
+   * @param idFuncionario id the user gave that doesn't exist
    **/
   public FuncionarioNaoExiste(String idFuncionario) {
     super("IdFuncionario não existe: " + idFuncionario);

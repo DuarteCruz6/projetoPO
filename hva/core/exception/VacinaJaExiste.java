@@ -3,7 +3,7 @@ package hva.core.exception;
 import java.io.Serial;
 
 /**
- * Class for representing an problem occuring during the parsing of an import file.
+* Class for representing an problem occuring during the creation of a vaccine, when the user submits an ID that already exists.
  */
 public class VacinaJaExiste extends Exception {
 
@@ -11,7 +11,7 @@ public class VacinaJaExiste extends Exception {
   private static final long serialVersionUID = 202407081733L;
   
   /**
-   * @param IdVacina name of the import file
+   * @param IdVacina id the user gave that already exists
    **/
   public VacinaJaExiste(String IdVacina) {
     super("IdVacina já existe: " + IdVacina);

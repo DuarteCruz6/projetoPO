@@ -3,7 +3,7 @@ package hva.core.exception;
 import java.io.Serial;
 
 /**
- * Class for representing an problem occuring during the parsing of an import file.
+* Class for representing an problem occuring during obtaining an employee responsability that supposedly exists, but actually doesn't
  */
 public class NaoResponsabilidade extends Exception {
 
@@ -11,8 +11,8 @@ public class NaoResponsabilidade extends Exception {
   private static final long serialVersionUID = 202407081733L;
   
   /**
-   * @param idFuncionario name of the import file
-   * @param idResponsabilidade name of the import file
+   * @param idFuncionario id the user gave that corresponds to an employee
+   * @param idResponsabilidade id the user gave that doesn't exist
    **/
   public NaoResponsabilidade(String idFuncionario, String idResponsabilidade) {
     super("O Funcionario "+idFuncionario+ " nao tem a responsabilidade " + idResponsabilidade);
