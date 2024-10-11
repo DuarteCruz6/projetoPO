@@ -495,7 +495,6 @@ public class Hotel implements Serializable {
           newArvore = new Caduca(idArvore,nome,dificuldadeBase,_estacao);
           _arvores.add(newArvore);
         }
-        //listarArvoreEspecifica(newArvore);
       }else{
         throw new ArvoreJaExiste(idArvore);
       }
@@ -514,34 +513,29 @@ public class Hotel implements Serializable {
   // Usada para o Parser, pois cria-se primeiro as arvores e só depois se cria o habitat que possui as arvores
   public void plantarArvoreExistente(String idHabitat, String idArvore) throws ArvoreNaoExiste, HabitatNaoExiste{ 
     if(!verificarIdArvore(idArvore)){
-      Arvore arvore = getArvore(idArvore);
-      Habitat habitat = getHabitat(idHabitat);
-      habitat.addArvore(arvore);
-      if(!_alteracoes){
-        changeAlteracoes();
-      }
+      plantarArvore(idHabitat, idArvore);
     }else{
       throw new ArvoreNaoExiste(idArvore);
     }
  }
 
  //usada para o plantarArvores, pois cria-se primeiro o habitat e só depois se cria a arvore que vai ser colocada no habitat
- public void plantarArvoreNaoExistente(String idHabitat, String idArvore, String nome, int idade, int dificuldadeBase, String tipo) throws ArvoreNaoExiste, HabitatNaoExiste{ 
-  if(verificarIdArvore(idArvore)){
-    try {
-      novaArvore(idArvore, nome, idade, dificuldadeBase, tipo);
-    } catch (ArvoreJaExiste e) {
-      // nunca ira acontecer
+  public void plantarArvoreNaoExistente(String idHabitat, String idArvore, String nome, int idade, int dificuldadeBase, String tipo) throws HabitatNaoExiste, ArvoreNaoExiste, ArvoreJaExiste{ 
+    if(verificarIdArvore(idArvore)){
+        novaArvore(idArvore, nome, idade, dificuldadeBase, tipo);
+      plantarArvore(idHabitat, idArvore);
+    }else{
+      throw new ArvoreNaoExiste(idArvore);
     }
-    Arvore arvore = getArvore(idArvore);
-    Habitat habitat = getHabitat(idHabitat);
-    habitat.addArvore(arvore);
+  }
+
+  private void plantarArvore(String idHabitat, String idArvore) throws ArvoreNaoExiste, HabitatNaoExiste{
+  Arvore arvore = getArvore(idArvore);
+  Habitat habitat = getHabitat(idHabitat);
+  habitat.addArvore(arvore);
     if(!_alteracoes){
       changeAlteracoes();
     }
-  }else{
-    throw new ArvoreNaoExiste(idArvore);
-  }
 }
 
   public ArrayList <Arvore> getArvoresHabitat(Habitat habitat){

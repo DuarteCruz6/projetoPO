@@ -66,14 +66,20 @@ class DoAddTreeToHabitat extends Command<Hotel> {
       //dificuldade base de limpeza dificuldadeArvore e tipo tipoArvore, 
       //e planta no habitat de id idHabitat
       _hotel.plantarArvoreNaoExistente(idHabitat, idArvore, nomeArvore,idadeArvore, dificuldadeArvore,tipoArvore);
-      
-    } catch (ArvoreNaoExiste e) {
-      //ja ha arvore com este id
-      throw new DuplicateTreeKeyException(idArvore);
-      
+    
     } catch (HabitatNaoExiste e) {
       //nao ha habitat com este id
       throw new UnknownHabitatKeyException(idHabitat);
+
+    } catch (ArvoreNaoExiste e) {
+      //so é lançada caso seja para plantar uma arvore ja existente no habitat de id idHabitat
+      //nao ha arvore com este id
+      throw new DuplicateTreeKeyException(idArvore);
+
+    } catch (ArvoreJaExiste ex) {
+      //so é lançada caso seja para plantar uma arvore que ainda n foi criada
+      //entao tem de se criar uma árvore nova para adicionar ao habitat de id idHabitat
+      //ja ha habitat com este id
     }
   }
 }
