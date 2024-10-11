@@ -5,8 +5,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-// FIXME add other imports if needed
-
 /**
  * Esta solução assume que a classe Hotel já tem a seguinte funcionalidade
 
@@ -52,11 +50,11 @@ public class Parser{
     switch(components[0]) {
     case "ESPÉCIE" -> parseSpecies(components);
     case "ANIMAL" -> parseAnimal(components);
-    case "ÁRVORE" -> parseTree(components,components[1]);
-    case "HABITAT" -> parseHabitat(components,components[1]);
+    case "ÁRVORE" -> parseTree(components);
+    case "HABITAT" -> parseHabitat(components);
     case "TRATADOR" -> parseEmployee(components, "TRT");
     case "VETERINÁRIO" -> parseEmployee(components, "VET");
-    case "VACINA" -> parseVaccine(components,components[1]);
+    case "VACINA" -> parseVaccine(components);
     default -> throw new UnrecognizedEntryException ("tipo de entrada inválido: " + components[0]);
     }
   }
@@ -103,7 +101,7 @@ public class Parser{
   }
 
   // Parse a line with format VACINA|id|nome|idEspécie1,...,idEspécieN
-  private void parseVaccine(String[] components, String empType) throws VacinaJaExiste, UnrecognizedEntryException, EspecieNaoExiste{
+  private void parseVaccine(String[] components) throws VacinaJaExiste, UnrecognizedEntryException, EspecieNaoExiste{
     try {
       String id = components[1];
       String name = components[2];
@@ -115,7 +113,7 @@ public class Parser{
   }
 
   // Parse a line with format ÁRVORE|id|nome|idade|dificuldade|tipo
-  private void parseTree(String[] components, String line) throws UnrecognizedEntryException, ArvoreJaExiste {                           
+  private void parseTree(String[] components) throws UnrecognizedEntryException, ArvoreJaExiste {                           
     try {
       String id = components[1];                                                                                          // VERIFICAR BUG AQUI, NÃO É SUPOSTO RECEBER O ID DO HABITAT???
       String name = components[2];                                                                                        //
@@ -130,7 +128,7 @@ public class Parser{
   }
 
   // Parse a line with format HABITAT|id|nome|área|idÁrvore1,...,idÁrvoreN
-  private void parseHabitat(String[] components, String line) throws UnrecognizedEntryException, HabitatJaExiste, ArvoreJaExiste, ArvoreNaoExiste, HabitatNaoExiste {
+  private void parseHabitat(String[] components) throws UnrecognizedEntryException, HabitatJaExiste, ArvoreJaExiste, ArvoreNaoExiste, HabitatNaoExiste {
     try {
       String idHabitat = components[1];
       String name = components[2];

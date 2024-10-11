@@ -5,8 +5,6 @@ import hva.core.RegistoVacina;
 import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
-//FIXME add more imports if needed
-
 /**
  * Show all vaccines applied to animals belonging to an invalid species.
  **/

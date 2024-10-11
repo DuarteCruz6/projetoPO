@@ -5,7 +5,6 @@ import hva.core.Hotel;
 import hva.core.Vacina;
 import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
-//FIXME add more imports if needed
 
 /**
  * Show all vaccines.

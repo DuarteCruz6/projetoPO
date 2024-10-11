@@ -4,35 +4,76 @@ import hva.core.exception.*;
 import java.io.*;
 import java.util.*;
 
+/**
+ * The Hotel class represents the main system that manages various domain entities
+ * such as species, animals, habitats, employees, and vaccines. It handles data 
+ * storage and tracking changes to the state of the system.
+ * Implements Serializable to allow object persistence.
+ */
 public class Hotel implements Serializable {
 
   @Serial
   private static final long serialVersionUID = 202407081733L;
-  private final ArrayList <String> _idEspecies;
-  private final ArrayList <String> _nomeEspecies;
-  private final ArrayList <String> _idVacinas;
-  private final ArrayList <String> _idAnimais;
-  private final ArrayList <String> _idHabitats;
-  private final ArrayList <String> _idFuncionarios;
-  private final ArrayList <String> _idArvores;
+  
+  /** A list of species IDs. */
+  private final ArrayList<String> _idEspecies;
+  
+  /** A list of species names. */
+  private final ArrayList<String> _nomeEspecies;
+  
+  /** A list of vaccine IDs. */
+  private final ArrayList<String> _idVacinas;
+  
+  /** A list of animal IDs. */
+  private final ArrayList<String> _idAnimais;
+  
+  /** A list of habitat IDs. */
+  private final ArrayList<String> _idHabitats;
+  
+  /** A list of employee IDs. */
+  private final ArrayList<String> _idFuncionarios;
+  
+  /** A list of tree IDs. */
+  private final ArrayList<String> _idArvores;
+  
+  /** Represents the current station (season) of the hotel. */
   private final Estacao _estacao;
-  private final SortedSet <Arvore> _arvores;
-  private final SortedSet <Animal> _animais;
-  private final SortedSet <Funcionario> _funcionarios;
-  private final SortedSet <Especie> _especies;
-  private final SortedSet <Habitat> _habitats;
-  private final SortedSet <Vacina> _vacinas;
-  private final ArrayList <RegistoVacina> _registoVacinas;
+  
+  /** A sorted set of trees in the hotel. */
+  private final SortedSet<Arvore> _arvores;
+  
+  /** A sorted set of animals in the hotel. */
+  private final SortedSet<Animal> _animais;
+  
+  /** A sorted set of employees in the hotel. */
+  private final SortedSet<Funcionario> _funcionarios;
+  
+  /** A sorted set of species in the hotel. */
+  private final SortedSet<Especie> _especies;
+  
+  /** A sorted set of habitats in the hotel. */
+  private final SortedSet<Habitat> _habitats;
+  
+  /** A sorted set of vaccines in the hotel. */
+  private final SortedSet<Vacina> _vacinas;
+  
+  /** A list of vaccine records. */
+  private final ArrayList<RegistoVacina> _registoVacinas;
+  
+  /** A flag indicating whether there have been changes in the hotel system. */
   private boolean _alteracoes;
 
-  public Hotel(){
-    _idEspecies= new ArrayList<>();
-    _nomeEspecies= new ArrayList<>();
-    _idVacinas= new ArrayList<>();
-    _idAnimais= new ArrayList<>();
-    _idHabitats= new ArrayList<>();
-    _idFuncionarios= new ArrayList<>();
-    _idArvores= new ArrayList<>();
+  /**
+   * Constructor for Hotel, initializing all entity lists and the station.
+   */
+  public Hotel() {
+    _idEspecies = new ArrayList<>();
+    _nomeEspecies = new ArrayList<>();
+    _idVacinas = new ArrayList<>();
+    _idAnimais = new ArrayList<>();
+    _idHabitats = new ArrayList<>();
+    _idFuncionarios = new ArrayList<>();
+    _idArvores = new ArrayList<>();
     _estacao = new Estacao();
     _arvores = new TreeSet<>();
     _animais = new TreeSet<>();
@@ -41,254 +82,416 @@ public class Hotel implements Serializable {
     _habitats = new TreeSet<>();
     _vacinas = new TreeSet<>();
     _registoVacinas = new ArrayList<>();
-    _alteracoes=false;
+    _alteracoes = false;
   }
 
   /**
-   * Read text input file and create corresponding domain entities.
-   * @throws FuncionarioNaoExiste 
-   * @throws EspecieNaoExiste 
-   * @throws HabitatNaoExiste 
-   * @throws ArvoreNaoExiste 
-   * @throws VacinaJaExiste 
-   * @throws NaoResponsabilidade 
-   * @throws HabitatJaExiste 
-   * @throws ArvoreJaExiste 
-   * @throws AnimalJaExiste 
-   * @throws FuncionarioJaExiste 
-   * @throws UnrecognizedEntryException 
-   * @throws IOException 
-   * @throws NoResponsibilityException 
-   * @throws UnknownEmployeeKeyException 
-   * @throws UnknownSpeciesKeyException 
-   * @throws HabitatJaExisteException 
-   * @throws UnknownTreeKeyException 
-   **/
-
-  void importFile(String filename) throws IOException, UnrecognizedEntryException, FuncionarioJaExiste,
-  AnimalJaExiste, ArvoreJaExiste, HabitatJaExiste, NaoResponsabilidade, VacinaJaExiste, ArvoreNaoExiste, 
-  HabitatNaoExiste, EspecieNaoExiste, FuncionarioNaoExiste{
+   * Reads data from a file and creates corresponding domain entities.
+   * 
+   * @param filename The name of the file to import data from.
+   * @throws IOException if there is an error reading the file.
+   * @throws UnrecognizedEntryException if an entry in the file is unrecognized.
+   * @throws FuncionarioJaExiste if an employee already exists.
+   * @throws AnimalJaExiste if an animal already exists.
+   * @throws ArvoreJaExiste if a tree already exists.
+   * @throws HabitatJaExiste if a habitat already exists.
+   * @throws NaoResponsabilidade if there is a responsibility issue.
+   * @throws VacinaJaExiste if a vaccine already exists.
+   * @throws ArvoreNaoExiste if a tree does not exist.
+   * @throws HabitatNaoExiste if a habitat does not exist.
+   * @throws EspecieNaoExiste if a species does not exist.
+   * @throws FuncionarioNaoExiste if an employee does not exist.
+   */
+  void importFile(String filename) throws IOException, UnrecognizedEntryException, FuncionarioJaExiste, 
+      AnimalJaExiste, ArvoreJaExiste, HabitatJaExiste, NaoResponsabilidade, VacinaJaExiste, 
+      ArvoreNaoExiste, HabitatNaoExiste, EspecieNaoExiste, FuncionarioNaoExiste {
 
     Parser parser = new Parser(this);
     parser.parseFile(filename);
   }
 
-  boolean houveAlteracoes(){
+  /**
+   * Checks if there have been changes in the hotel system.
+   * 
+   * @return true if changes were made, false otherwise.
+   */
+  boolean houveAlteracoes() {
     return _alteracoes;
   }
 
-  void changeAlteracoes(){
-    _alteracoes=!_alteracoes;
+  /**
+   * Toggles the change flag indicating modifications to the hotel system.
+   */
+  void changeAlteracoes() {
+    _alteracoes = !_alteracoes;
   }
 
-  public ArrayList <String> getIdEspecies(){
+  /**
+   * Gets the list of species IDs.
+   * 
+   * @return A list of species IDs.
+   */
+  public ArrayList<String> getIdEspecies() {
     return _idEspecies;
   }
 
-  public Estacao getEstacao(){
+  /**
+   * Gets the current station (season) of the hotel.
+   * 
+   * @return The current station.
+   */
+  public Estacao getEstacao() {
     return _estacao;
   }
 
-  private void addIdEspecie(String idNovo){
-    if(!_alteracoes){
+  /**
+   * Adds a new species ID to the list and marks the system as altered if necessary.
+   * 
+   * @param idNovo The new species ID to add.
+   */
+  private void addIdEspecie(String idNovo) {
+    if (!_alteracoes) {
       changeAlteracoes();
     }
     _idEspecies.add(idNovo);
   }
 
-  boolean verificarNomeEspecie(String nomeNovo){
-    for(String nomeAtual: _nomeEspecies){
-      if(nomeAtual.toLowerCase().equals(nomeNovo.toLowerCase())){
+  /**
+   * Verifies if a species name is unique, adding it to the list if it is.
+   * 
+   * @param nomeNovo The new species name to verify.
+   * @return true if the species name is unique, false otherwise.
+   */
+  boolean verificarNomeEspecie(String nomeNovo) {
+    for (String nomeAtual : _nomeEspecies) {
+      //loops through all species and checks if the name in nomeNovo is the same as the specie's name
+      if (nomeAtual.toLowerCase().equals(nomeNovo.toLowerCase())) {
+        //the name is the same, so return false
         return false;
       }
     }
+    //the name doesnt exist, so we are going to create a new species with that name
     addNomeEspecie(nomeNovo);
     return true;
   }
-
-  private void addNomeEspecie(String nomeNovo){
-    if(!_alteracoes){
-      changeAlteracoes();
+  /**
+   * Adds a new species name to the list and marks the system as altered if necessary.
+   * 
+   * @param nomeNovo The new species name to add.
+   */
+  private void addNomeEspecie(String nomeNovo) {
+    if (!_alteracoes) {
+        changeAlteracoes();
     }
     _nomeEspecies.add(nomeNovo);
   }
 
-  boolean verificarIdAnimal(String idNovo){
-    for(String idAtual: _idAnimais){
-      if(idAtual.toLowerCase().equals(idNovo.toLowerCase())){
-        return false;
-      }
+  /**
+  * Verifies if an animal ID is unique, adding it to the list if it is.
+  * 
+  * @param idNovo The new animal ID to verify.
+  * @return true if the animal ID is unique, false otherwise.
+  */
+  boolean verificarIdAnimal(String idNovo) {
+    for (String idAtual : _idAnimais) {
+      //loops through all animals and checks if the name in idNovo is the same as the animal's id
+        if (idAtual.toLowerCase().equals(idNovo.toLowerCase())) {
+            return false;
+        }
     }
     addIdAnimal(idNovo);
     return true;
   }
 
-  private void addIdAnimal(String idNovo){
-    if(!_alteracoes){
-      changeAlteracoes();
+  /**
+  * Adds a new animal ID to the list and marks the system as altered if necessary.
+  * 
+  * @param idNovo The new animal ID to add.
+  */
+  private void addIdAnimal(String idNovo) {
+    if (!_alteracoes) {
+        changeAlteracoes();
     }
     _idAnimais.add(idNovo);
   }
 
-  boolean verificarIdVacina(String idNovo){
-    for(String idAtual: _idVacinas){
-      if(idAtual.toLowerCase().equals(idNovo.toLowerCase())){
-        return false;
-      }
+  /**
+  * Verifies if a vaccine ID is unique, adding it to the list if it is.
+  * 
+  * @param idNovo The new vaccine ID to verify.
+  * @return true if the vaccine ID is unique, false otherwise.
+  */
+  boolean verificarIdVacina(String idNovo) {
+    for (String idAtual : _idVacinas) {
+      //loops through all vaccines and checks if the name in idNovo is the same as the vaccine's id
+        if (idAtual.toLowerCase().equals(idNovo.toLowerCase())) {
+            return false;
+        }
     }
     addIdVacina(idNovo);
     return true;
   }
 
-  private void addIdVacina(String idNovo){
-    if(!_alteracoes){
-      changeAlteracoes();
+  /**
+  * Adds a new vaccine ID to the list and marks the system as altered if necessary.
+  * 
+  * @param idNovo The new vaccine ID to add.
+  */
+  private void addIdVacina(String idNovo) {
+    if (!_alteracoes) {
+        changeAlteracoes();
     }
     _idVacinas.add(idNovo);
   }
 
-  boolean verificarIdHabitat(String idNovo){
-    for(String idAtual: _idHabitats){
-      if(idAtual.toLowerCase().equals(idNovo.toLowerCase())){
-        return false;
-      }
+  /**
+  * Verifies if a habitat ID is unique, adding it to the list if it is.
+  * 
+  * @param idNovo The new habitat ID to verify.
+  * @return true if the habitat ID is unique, false otherwise.
+  */
+  boolean verificarIdHabitat(String idNovo) {
+    for (String idAtual : _idHabitats) {
+      //loops through all habitats and checks if the name in idNovo is the same as the habitat's id
+        if (idAtual.toLowerCase().equals(idNovo.toLowerCase())) {
+            return false;
+        }
     }
     addIdHabitat(idNovo);
     return true;
   }
 
-  private void addIdHabitat(String idNovo){
-    if(!_alteracoes){
-      changeAlteracoes();
+  /**
+  * Adds a new habitat ID to the list and marks the system as altered if necessary.
+  * 
+  * @param idNovo The new habitat ID to add.
+  */
+  private void addIdHabitat(String idNovo) {
+    if (!_alteracoes) {
+        changeAlteracoes();
     }
     _idHabitats.add(idNovo);
   }
 
-  boolean verificarIdFuncionario(String idNovo){
-    for(String idAtual: _idFuncionarios){
-      if(idAtual.toLowerCase().equals(idNovo.toLowerCase())){
-        return false;
-      }
+  /**
+  * Verifies if an employee ID is unique, adding it to the list if it is.
+  * 
+  * @param idNovo The new employee ID to verify.
+  * @return true if the employee ID is unique, false otherwise.
+  */
+  boolean verificarIdFuncionario(String idNovo) {
+    for (String idAtual : _idFuncionarios) {
+      //loops through all employees and checks if the name in idNovo is the same as the employees's id
+        if (idAtual.toLowerCase().equals(idNovo.toLowerCase())) {
+            return false;
+        }
     }
     addIdFuncionario(idNovo);
     return true;
   }
 
-  private void addIdFuncionario(String idNovo){
-    if(!_alteracoes){
-      changeAlteracoes();
+  /**
+  * Adds a new employee ID to the list and marks the system as altered if necessary.
+  * 
+  * @param idNovo The new employee ID to add.
+  */
+  private void addIdFuncionario(String idNovo) {
+    if (!_alteracoes) {
+        changeAlteracoes();
     }
     _idFuncionarios.add(idNovo);
   }
 
-  boolean verificarIdArvore(String idNovo){
-    for(String idAtual: _idArvores){
-      if(idAtual.toLowerCase().equals(idNovo.toLowerCase())){
-        return false;
-      }
+  /**
+  * Verifies if a tree ID is unique, adding it to the list if it is.
+  * 
+  * @param idNovo The new tree ID to verify.
+  * @return true if the tree ID is unique, false otherwise.
+  */
+  boolean verificarIdArvore(String idNovo) {
+    for (String idAtual : _idArvores) {
+        if (idAtual.toLowerCase().equals(idNovo.toLowerCase())) {
+            return false;
+        }
     }
     addIdArvore(idNovo);
     return true;
   }
 
-  private void addIdArvore(String idNovo){
-    if(!_alteracoes){
-      changeAlteracoes();
+  /**
+  * Adds a new tree ID to the list and marks the system as altered if necessary.
+  * 
+  * @param idNovo The new tree ID to add.
+  */
+  private void addIdArvore(String idNovo) {
+    if (!_alteracoes) {
+        changeAlteracoes();
     }
     _idArvores.add(idNovo);
   }
 
-  public void avancarEstacao(){
-    if(!_alteracoes){
-      changeAlteracoes();
+  /**
+  * Advances the station (season) and updates the age of all trees based on the new station.
+  * Marks the system as altered if necessary.
+  */
+  public void avancarEstacao() {
+    if (!_alteracoes) {
+        changeAlteracoes();
     }
     _estacao.skipEstacao();
-    for(Arvore arvore : _arvores){
-      arvore.checkAumentarIdade(_estacao);
+    for (Arvore arvore : _arvores) {
+        arvore.checkAumentarIdade(_estacao);
     }
   }
 
-  public double getSatisfacaoTotal(){
-    double satisfacao=0;
-    for (Animal animal: _animais){
-      satisfacao+= animal.getSatisfacao();
+  /**
+  * Calculates and returns the total satisfaction of all animals and employees.
+  * 
+  * @return The total satisfaction level.
+  */
+  public double getSatisfacaoTotal() {
+    double satisfacao = 0;
+    for (Animal animal : _animais) {
+        satisfacao += animal.getSatisfacao();
     }
-    for(Funcionario funcionario : _funcionarios){
-      satisfacao += funcionario.getSatisfacao(_estacao);
+    for (Funcionario funcionario : _funcionarios) {
+        satisfacao += funcionario.getSatisfacao(_estacao);
     }
     return satisfacao;
   }
 
-  public SortedSet<Animal> getAllAnimals(){
+  /**
+  * Returns the sorted set of all animals in the hotel.
+  * 
+  * @return A sorted set of animals.
+  */
+  public SortedSet<Animal> getAllAnimals() {
     return _animais;
   }
 
-  public Habitat getHabitat(String idHabitat) throws HabitatNaoExiste{
-    for(Habitat habitat : _habitats){
-      if(habitat.getId().toLowerCase().equals(idHabitat.toLowerCase())){
-        return habitat;
-      }
+  /**
+  * Retrieves the habitat corresponding to the given ID.
+  * 
+  * @param idHabitat The ID of the habitat to retrieve.
+  * @return The habitat with the given ID.
+  * @throws HabitatNaoExiste If the habitat with the given ID does not exist.
+  */
+  public Habitat getHabitat(String idHabitat) throws HabitatNaoExiste {
+    for (Habitat habitat : _habitats) {
+        if (habitat.getId().toLowerCase().equals(idHabitat.toLowerCase())) {
+            return habitat;
+        }
     }
     throw new HabitatNaoExiste(idHabitat);
   }
 
-  private Especie getEspecie(String idEspecie) throws EspecieNaoExiste{
-    for(Especie especie : _especies){
-      if(especie.getId().toLowerCase().equals(idEspecie.toLowerCase())){
-        return especie;
-      }
+  /**
+   * Retrieves the species corresponding to the given ID.
+   * 
+   * @param idEspecie The ID of the species to retrieve.
+   * @return The species with the given ID.
+   * @throws EspecieNaoExiste If the species with the given ID does not exist.
+   */
+  private Especie getEspecie(String idEspecie) throws EspecieNaoExiste {
+    for (Especie especie : _especies) {
+        if (especie.getId().toLowerCase().equals(idEspecie.toLowerCase())) {
+            return especie;
+        }
     }
     throw new EspecieNaoExiste(idEspecie);
   }
 
-  //Criar animal com especie ja existente
-  public void novoAnimal(String idAnimal, String nome, String idEspecie, String idHabitat) throws AnimalJaExiste,EspecieNaoExiste, HabitatNaoExiste{
-    if(verificarIdAnimal(idAnimal)){
-      Habitat habitatAnimal = getHabitat(idHabitat);
-      Especie especieAnimal = getEspecie(idEspecie);
-      especieAnimal.addAnimal();
-      Animal newAnimal = new Animal(idAnimal,nome,habitatAnimal,especieAnimal);
-      _animais.add(newAnimal);
-    }else{
+  /**
+  * Creates a new animal associated with an existing species and habitat.
+  * 
+  * @param idAnimal   The ID of the new animal.
+  * @param nome       The name of the new animal.
+  * @param idEspecie  The ID of the species the animal belongs to.
+  * @param idHabitat  The ID of the habitat where the animal resides.
+  * @throws AnimalJaExiste  If the animal already exists.
+  * @throws EspecieNaoExiste If the species does not exist.
+  * @throws HabitatNaoExiste If the habitat does not exist.
+  */
+  public void novoAnimal(String idAnimal, String nome, String idEspecie, String idHabitat) 
+        throws AnimalJaExiste, EspecieNaoExiste, HabitatNaoExiste {
+    if (verificarIdAnimal(idAnimal)) {
+        Habitat habitatAnimal = getHabitat(idHabitat);
+        Especie especieAnimal = getEspecie(idEspecie);
+        especieAnimal.addAnimal();
+        Animal newAnimal = new Animal(idAnimal, nome, habitatAnimal, especieAnimal);
+        _animais.add(newAnimal);
+    } else {
         throw new AnimalJaExiste(idAnimal);
     }
   }
 
-  //Criar especie e animal novos 
-  public void novoAnimal(String idAnimal, String nome, String idEspecie, String idHabitat, String nomeEspecie) throws AnimalJaExiste, HabitatNaoExiste, EspecieNaoExiste{
-    if(verificarIdAnimal(idAnimal)){    
-      Habitat habitatAnimal = getHabitat(idHabitat); 
-      novaEspecie(idEspecie, nomeEspecie);     
-      Especie especieAnimal = getEspecie(idEspecie);
-      Animal newAnimal = new Animal(idAnimal,nome,habitatAnimal,especieAnimal);
-      _animais.add(newAnimal);
-      especieAnimal.addAnimal();
-    }else{
+  /**
+  * Creates a new species and a new animal associated with that species and habitat.
+  * 
+  * @param idAnimal    The ID of the new animal.
+  * @param nome        The name of the new animal.
+  * @param idEspecie   The ID of the new species.
+  * @param idHabitat   The ID of the habitat where the animal resides.
+  * @param nomeEspecie The name of the new species.
+  * @throws AnimalJaExiste If the animal already exists.
+  * @throws HabitatNaoExiste If the habitat does not exist.
+  * @throws EspecieNaoExiste If the species does not exist.
+  */
+  public void novoAnimal(String idAnimal, String nome, String idEspecie, String idHabitat, String nomeEspecie) 
+        throws AnimalJaExiste, HabitatNaoExiste, EspecieNaoExiste {
+    if (verificarIdAnimal(idAnimal)) {
+        Habitat habitatAnimal = getHabitat(idHabitat);
+        novaEspecie(idEspecie, nomeEspecie);
+        Especie especieAnimal = getEspecie(idEspecie);
+        Animal newAnimal = new Animal(idAnimal, nome, habitatAnimal, especieAnimal);
+        _animais.add(newAnimal);
+        especieAnimal.addAnimal();
+    } else {
         throw new AnimalJaExiste(idAnimal);
     }
   }
 
-  public void novaEspecie(String id, String nome){
-    if(verificarNomeEspecie(nome)){
-      Especie newEspecie = new Especie(id,nome);
-      _especies.add(newEspecie);
-      newEspecie.addAnimal();
-      addIdEspecie(id);
+  /**
+  * Creates a new species with the given ID and name.
+  * 
+  * @param id    The ID of the new species.
+  * @param nome  The name of the new species.
+  */
+  public void novaEspecie(String id, String nome) {
+    if (verificarNomeEspecie(nome)) {
+        Especie newEspecie = new Especie(id, nome);
+        _especies.add(newEspecie);
+        newEspecie.addAnimal();
+        addIdEspecie(id);
     }
   }
 
-  public Animal getAnimal(String idAnimal) throws AnimalNaoExiste{
-    for(Animal animal : _animais){
-      if(animal.getId().toLowerCase().equals(idAnimal.toLowerCase())){
-        return animal;
-      }
+  /**
+  * Retrieves the animal corresponding to the given ID.
+  * 
+  * @param idAnimal The ID of the animal to retrieve.
+  * @return The animal with the given ID.
+  * @throws AnimalNaoExiste If the animal with the given ID does not exist.
+  */
+  public Animal getAnimal(String idAnimal) throws AnimalNaoExiste {
+    for (Animal animal : _animais) {
+        if (animal.getId().toLowerCase().equals(idAnimal.toLowerCase())) {
+            return animal;
+        }
     }
     throw new AnimalNaoExiste(idAnimal);
   }
 
-  public void mudarHabitatDoAnimal(String idAnimal, Habitat habitatNovo) throws AnimalNaoExiste{
-    if(!_alteracoes){
-      changeAlteracoes();
+  /**
+  * Changes the habitat of an existing animal.
+  * 
+  * @param idAnimal     The ID of the animal whose habitat is to be changed.
+  * @param habitatNovo  The new habitat for the animal.
+  * @throws AnimalNaoExiste If the animal does not exist.
+  */
+  public void mudarHabitatDoAnimal(String idAnimal, Habitat habitatNovo) throws AnimalNaoExiste {
+    if (!_alteracoes) {
+        changeAlteracoes();
     }
     Animal animal = getAnimal(idAnimal);
     Habitat habitatAntigo = animal.getHabitat();
@@ -297,93 +500,150 @@ public class Hotel implements Serializable {
     habitatNovo.addAnimal(animal);
   }
 
-  public int getSatisfacaoAnimal(String idAnimal) throws AnimalNaoExiste{
+  /**
+  * Gets the satisfaction level of a specific animal.
+  * 
+  * @param idAnimal The ID of the animal.
+  * @return The satisfaction level of the animal, rounded to the nearest integer.
+  * @throws AnimalNaoExiste If the animal does not exist.
+  */
+  public int getSatisfacaoAnimal(String idAnimal) throws AnimalNaoExiste {
     Animal animal = getAnimal(idAnimal);
-    if(animal!=null){
-      return (int) Math.round(animal.getSatisfacao());
+    if (animal != null) {
+        return (int) Math.round(animal.getSatisfacao());
     }
     throw new AnimalNaoExiste(idAnimal);
   }
 
-  public SortedSet<Funcionario> getFuncionarios(){
+  /**
+  * Retrieves all employees (sorted set).
+  * 
+  * @return A sorted set of all employees.
+  */
+  public SortedSet<Funcionario> getFuncionarios() {
     return _funcionarios;
   }
 
-
-  public void novoFuncionario(String idFuncionario, String nome, String tipo) throws FuncionarioJaExiste{          //TIPO = VET ou TRT
-    if(verificarIdFuncionario(idFuncionario)){
-      if(tipo.equals("VET")){
-        Veterinario newVeterinario = new Veterinario(idFuncionario,nome);
-        _funcionarios.add(newVeterinario);
-      }else{
-        Tratador newTratador = new Tratador(idFuncionario,nome);
-        _funcionarios.add(newTratador);
-      }
-    }else{
-      throw new FuncionarioJaExiste(idFuncionario);
+  /**
+  * Creates a new employee of type Veterinarian or Treater.
+  * 
+  * @param idFuncionario The ID of the new employee.
+  * @param nome          The name of the new employee.
+  * @param tipo          The type of the employee, either "VET" (Veterinarian) or "TRT" (Treater).
+  * @throws FuncionarioJaExiste If the employee already exists.
+  */
+  public void novoFuncionario(String idFuncionario, String nome, String tipo) throws FuncionarioJaExiste {
+    if (verificarIdFuncionario(idFuncionario)) {
+        if (tipo.equals("VET")) {
+            Veterinario newVeterinario = new Veterinario(idFuncionario, nome);
+            _funcionarios.add(newVeterinario);
+        } else {
+            Tratador newTratador = new Tratador(idFuncionario, nome);
+            _funcionarios.add(newTratador);
+        }
+    } else {
+        throw new FuncionarioJaExiste(idFuncionario);
     }
   }
 
-  private Funcionario getFuncionario(String idFuncionario) throws FuncionarioNaoExiste{
-    for(Funcionario funcionario : _funcionarios){
-      if(funcionario.getId().toLowerCase().equals(idFuncionario.toLowerCase())){
-        return funcionario;
-      }
+  /**
+  * Retrieves the employee corresponding to the given ID.
+  * 
+  * @param idFuncionario The ID of the employee to retrieve.
+  * @return The employee with the given ID.
+  * @throws FuncionarioNaoExiste If the employee with the given ID does not exist.
+  */
+  private Funcionario getFuncionario(String idFuncionario) throws FuncionarioNaoExiste {
+    for (Funcionario funcionario : _funcionarios) {
+        if (funcionario.getId().toLowerCase().equals(idFuncionario.toLowerCase())) {
+            return funcionario;
+        }
     }
     throw new FuncionarioNaoExiste(idFuncionario);
   }
-  public void novaResponsabilidade(String idFuncionario, String idResponsabilidade) throws NaoResponsabilidade, FuncionarioNaoExiste, EspecieNaoExiste, HabitatNaoExiste{    //idResponsabilidade pode ser um idAnimal ou idHabitat
+
+  /**
+  * Adds a new responsibility to the given employee, based on their type (Veterinarian or Treater).
+  * The responsibility can be a species or a habitat.
+  * 
+  * @param idFuncionario      The ID of the employee.
+  * @param idResponsabilidade The ID of the responsibility (species or habitat).
+  * @throws NaoResponsabilidade If the responsibility cannot be assigned.
+  * @throws FuncionarioNaoExiste If the employee does not exist.
+  * @throws EspecieNaoExiste If the species does not exist (for veterinarians).
+  * @throws HabitatNaoExiste If the habitat does not exist (for Treaters).
+  */
+  public void novaResponsabilidade(String idFuncionario, String idResponsabilidade)
+        throws NaoResponsabilidade, FuncionarioNaoExiste, EspecieNaoExiste, HabitatNaoExiste {
     boolean notAdded = true;
     Funcionario funcionario = getFuncionario(idFuncionario);
-    if(funcionario.getTipo().equals("VET")){                                       //este funcionario é um veterinario, logo vamos fazer downcast de funcionario para veterinario
-      Veterinario veterinario = (Veterinario) funcionario;
-      Especie especie = getEspecie(idResponsabilidade);
-      if(especie!=null){
-        veterinario.addEspecie(especie);                                            //vamos adicionar uma espécie às responsabilidades deste veterinario
-        especie.addVeterinario();
-        notAdded= false;
-        if(!_alteracoes){
-          changeAlteracoes();
+    if (funcionario.getTipo().equals("VET")) {
+        //this employee is a Vet, so we can downcast from Funcionario to Veterinario
+        Veterinario veterinario = (Veterinario) funcionario;  //downcast
+        Especie especie = getEspecie(idResponsabilidade);
+        if (especie != null) {
+            //we can add this specie to the species that the Vet treats
+            veterinario.addEspecie(especie);
+            especie.addVeterinario();
+            notAdded = false;
+            if (!_alteracoes) {
+                changeAlteracoes();
+            }
         }
-      }
-    }else{                                                                        //este funcionario é um tratador, logo vamos fazer downcast de funcionario para tratador
-      Tratador tratador = (Tratador) funcionario;
-      Habitat habitat = getHabitat(idResponsabilidade);
-      if(habitat!=null){
-        tratador.addHabitat(habitat);                                             //vamos adicionar um habitat às responsabilidades deste veterinario
-        habitat.addTratador();
-        notAdded = false;
-        if(!_alteracoes){
-          changeAlteracoes();
+    } else {
+        //this employee is a Treater, so we can downcast from Funcionario to Tratador
+        Tratador tratador = (Tratador) funcionario; //downcast
+        Habitat habitat = getHabitat(idResponsabilidade);
+        if (habitat != null) {
+            //we can add this habitat to the habitats that the Treator treats
+            tratador.addHabitat(habitat);
+            habitat.addTratador();
+            notAdded = false;
+            if (!_alteracoes) {
+                changeAlteracoes();
+            }
         }
-      }
     }
-    if(notAdded){
-      throw new NaoResponsabilidade(idFuncionario, idResponsabilidade);
+    if (notAdded) {
+        throw new NaoResponsabilidade(idFuncionario, idResponsabilidade);
     }
   }
 
-  public void tirarResponsabilidade(String idFuncionario, String idResponsabilidade) throws NaoResponsabilidade, FuncionarioNaoExiste, EspecieNaoExiste, HabitatNaoExiste{  //idResponsabilidade pode ser um idAnimal ou idHabitat
+    /**
+   * Removes a responsibility from an employee. The responsibility can either be a species for a veterinarian 
+   * or a habitat for a caretaker. 
+   * @param idFuncionario The ID of the employee.
+   * @param idResponsabilidade The ID of the species or habitat.
+   * @throws NaoResponsabilidade If the responsibility does not exist.
+   * @throws FuncionarioNaoExiste If the employee does not exist.
+   * @throws EspecieNaoExiste If the species does not exist.
+   * @throws HabitatNaoExiste If the habitat does not exist.
+   */
+  public void tirarResponsabilidade(String idFuncionario, String idResponsabilidade) throws NaoResponsabilidade, FuncionarioNaoExiste, EspecieNaoExiste, HabitatNaoExiste {
     Funcionario funcionario = getFuncionario(idFuncionario);
-    if(funcionario.getTipo().equals("VET")){                                       //este funcionario é um veterinario, logo vamos fazer downcast de funcionario para veterinario
-      Veterinario veterinario = (Veterinario) funcionario;
+    // Check if the employee is a veterinarian
+    if(funcionario.getTipo().equals("VET")){
+      //This employee is a Vet, so we can downcast from Funcionario to Veterinario
+      Veterinario veterinario = (Veterinario) funcionario;  //downcast
       Especie especie = getEspecie(idResponsabilidade);
-      if(especie==null){
+      if(especie == null){
         throw new NaoResponsabilidade(idFuncionario, idResponsabilidade);
       }
-      veterinario.removeEspecie(especie);                                         //vamos remover uma espécie das responsabilidades deste veterinario
+      // Remove species from the veterinarian's responsibilities
+      veterinario.removeEspecie(especie);
       especie.removeVeterinario();
       if(!_alteracoes){
         changeAlteracoes();
       }
-    }
-    else{                                                                  //este funcionario é um tratador, logo vamos fazer downcast de funcionario para tratador
-      Tratador tratador = (Tratador) funcionario;
+    } else {
+      //This employee is a Treater, so we can downcast from Funcionario to Tratadaor
+      Tratador tratador = (Tratador) funcionario; //downcast
       Habitat habitat = getHabitat(idResponsabilidade);
-      if(habitat==null){
+      if(habitat == null){
         throw new NaoResponsabilidade(idFuncionario, idResponsabilidade);
       }
-      tratador.removeHabitat(habitat);                                          //vamos remover um habitat das responsabilidades deste veterinario
+      // Remove habitat from the caretaker's responsibilities
+      tratador.removeHabitat(habitat);
       habitat.removeTratador();
       if(!_alteracoes){
         changeAlteracoes();
@@ -391,26 +651,51 @@ public class Hotel implements Serializable {
     }
   }
 
-  public int getSatisfacaoFuncionario(String idFuncionario) throws FuncionarioNaoExiste{
+  /**
+   * Gets the satisfaction level of an employee based on the current station.
+   * @param idFuncionario The ID of the employee.
+   * @return The satisfaction level as an integer.
+   * @throws FuncionarioNaoExiste If the employee does not exist.
+   */
+  public int getSatisfacaoFuncionario(String idFuncionario) throws FuncionarioNaoExiste {
     Funcionario funcionario = getFuncionario(idFuncionario);
-    if(funcionario!=null){
-      return (int)Math.round(funcionario.getSatisfacao(_estacao));
+    if(funcionario != null){
+      return (int) Math.round(funcionario.getSatisfacao(_estacao));
     }
     throw new FuncionarioNaoExiste(idFuncionario);
   }
 
-  public SortedSet <Habitat> getAllHabitats(){
+  /**
+   * Returns all habitats in the system.
+   * @return A sorted set of all habitats.
+   */
+  public SortedSet<Habitat> getAllHabitats(){
     return _habitats;
   }
 
-  public void novoHabitat(String idHabitat, String nome, int area) throws HabitatJaExiste{
-    if (verificarIdHabitat(idHabitat)){
-      Habitat newHabitat = new Habitat(idHabitat,nome,area);
+  /**
+   * Adds a new habitat to the system.
+   * @param idHabitat The ID of the habitat.
+   * @param nome The name of the habitat.
+   * @param area The area of the habitat.
+   * @throws HabitatJaExiste If the habitat already exists.
+   */
+  public void novoHabitat(String idHabitat, String nome, int area) throws HabitatJaExiste {
+    if(verificarIdHabitat(idHabitat)){
+      Habitat newHabitat = new Habitat(idHabitat, nome, area);
       _habitats.add(newHabitat);
+    } else {
+      throw new HabitatJaExiste(idHabitat);
     }
   }
 
-  public void alterarAreaHabitat(String idHabitat, int novaArea) throws HabitatNaoExiste{
+  /**
+   * Changes the area of an existing habitat.
+   * @param idHabitat The ID of the habitat.
+   * @param novaArea The new area to set.
+   * @throws HabitatNaoExiste If the habitat does not exist.
+   */
+  public void alterarAreaHabitat(String idHabitat, int novaArea) throws HabitatNaoExiste {
     Habitat habitat = getHabitat(idHabitat);
     habitat.changeArea(novaArea);
     if(!_alteracoes){
@@ -418,65 +703,48 @@ public class Hotel implements Serializable {
     }
   }
 
-  public void mudarInfluenciaHabitatEspecie(String idHabitat, String idEspecie, String influencia) throws HabitatNaoExiste, EspecieNaoExiste{     //influencia = POS, NEG ou NEU;   POS=20, NEG=-20, NEU=0;
+  /**
+   * Changes the influence of a habitat on a species. Influence can be positive, negative, or neutral.
+   * @param idHabitat The ID of the habitat.
+   * @param idEspecie The ID of the species.
+   * @param influencia The type of influence: "POS", "NEG", or "NEU". POS=20, NEG=-20, NEU=0;
+   * @throws HabitatNaoExiste If the habitat does not exist.
+   * @throws EspecieNaoExiste If the species does not exist.
+   */
+  public void mudarInfluenciaHabitatEspecie(String idHabitat, String idEspecie, String influencia) throws HabitatNaoExiste, EspecieNaoExiste {
     Habitat habitatParaMudar = getHabitat(idHabitat);
     Especie especie = getEspecie(idEspecie);
     switch (influencia) {
-      case "POS" -> {
-        //o habitat agora tem influencia positiva na especie
-        mudarInfluenciaHabitatEspeciePOS(especie,habitatParaMudar);
-      }
-      case "NEG" -> {
-        //o habitat agora tem influencia negativa na especie
-        mudarInfluenciaHabitatEspecieNEG(especie,habitatParaMudar);
-      }
-      default -> {
-        //o habitat agora tem influencia neutra na especie
-        mudarInfluenciaHabitatEspecieNEUTRA(especie,habitatParaMudar);
-      }
+      //the habitat now has positive influence in the species
+      case "POS" -> mudarInfluenciaHabitatEspeciePOS(especie, habitatParaMudar);
+      //the habitat now has negative influence in the species
+      case "NEG" -> mudarInfluenciaHabitatEspecieNEG(especie, habitatParaMudar);
+      //the habitat now has neutral influence in the species
+      default -> mudarInfluenciaHabitatEspecieNEUTRA(especie, habitatParaMudar);
     }
-    for(Animal animal : _animais){                              //mudar a adequacao nos animais
-      if(animal.getEspecie().equals(especie)){
-        animal.changeAdequacaoHabitat();
+    for(Animal animal : _animais){
+      //loops through all animals in the hotel and checks if they are from the species and in the habitat
+      if(animal.getHabitat().getId().equals(idHabitat)){
+        //the animal is in the habitat, so we can now check if it is from the same specie
+        if(animal.getEspecie().equals(especie)){
+          //the habitat is from the species whose influence changed, so we now need to change the animal's adequation
+          animal.changeAdequacaoHabitat();
+        }
       }
     }
   }
 
-  private void mudarInfluenciaHabitatEspeciePOS(Especie especie, Habitat habitatParaMudar){
+  /**
+   * Adds positive influence of a habitat on a species.
+   * @param especie The species.
+   * @param habitatParaMudar The habitat.
+   */
+  private void mudarInfluenciaHabitatEspeciePOS(Especie especie, Habitat habitatParaMudar) {
     especie.addHabitatAdequado(habitatParaMudar);
     for(Habitat habitat : especie.getHabitatsMaus()){
-      if(habitat.equals(habitatParaMudar)){               //o habitat anteriormente tinha influencia negativa na especie
-          especie.removeHabitatMau(habitat);
-          if(!_alteracoes){
-            changeAlteracoes();
-          }
-      }
-    }
-  }
-
-  private void mudarInfluenciaHabitatEspecieNEG(Especie especie, Habitat habitatParaMudar){
-    especie.addHabitatMau(habitatParaMudar);
-    for(Habitat habitat : especie.getHabitatsAdequados()){
-      if(habitat.equals(habitatParaMudar)){               //o habitat anteriormente tinha influencia positiva na especie
-        especie.removeHabitatAdequado(habitat);
-        if(!_alteracoes){
-          changeAlteracoes();
-        }
-      }
-    }
-  }
-
-  private void mudarInfluenciaHabitatEspecieNEUTRA(Especie especie, Habitat habitatParaMudar){
-    for(Habitat habitat : especie.getHabitatsAdequados()){
-      if(habitat.equals(habitatParaMudar)){               //o habitat anteriormente tinha influencia positiva na especie
-        especie.removeHabitatAdequado(habitat);
-        if(!_alteracoes){
-          changeAlteracoes();
-        }
-      }
-    }
-    for(Habitat habitat : especie.getHabitatsMaus()){
-      if(habitat.equals(habitatParaMudar)){               //o habitat anteriormente tinha influencia negativa na especie
+      //loops through all bad habitats for the specie and checks if the habitat was a bad one before changing
+      if(habitat.equals(habitatParaMudar)){
+        //the habitat had bad influence in the specie, so now we need to remove
         especie.removeHabitatMau(habitat);
         if(!_alteracoes){
           changeAlteracoes();
@@ -485,22 +753,86 @@ public class Hotel implements Serializable {
     }
   }
 
-  public void novaArvore(String idArvore, String nome, int idade, int dificuldadeBase, String tipo)throws ArvoreJaExiste{ //tipo = PER ou CAD
-      if(verificarIdArvore(idArvore)){
-        Arvore newArvore;
-        if(tipo.equals("PER")){                    //a arvore é perene
-          newArvore = new Perene(idArvore,nome,dificuldadeBase,_estacao);
-          _arvores.add(newArvore);
-        }else{                                        //a arvore é caduca                                     
-          newArvore = new Caduca(idArvore,nome,dificuldadeBase,_estacao);
-          _arvores.add(newArvore);
+  /**
+   * Adds negative influence of a habitat on a species.
+   * @param especie The species.
+   * @param habitatParaMudar The habitat.
+   */
+  private void mudarInfluenciaHabitatEspecieNEG(Especie especie, Habitat habitatParaMudar) {
+    especie.addHabitatMau(habitatParaMudar);
+    for(Habitat habitat : especie.getHabitatsAdequados()){
+      //loops through all good habitats for the specie and checks if the habitat was a good one before changing
+      if(habitat.equals(habitatParaMudar)){
+        //the habitat had good influence in the specie, so now we need to remove
+        especie.removeHabitatAdequado(habitat);
+        if(!_alteracoes){
+          changeAlteracoes();
         }
-      }else{
-        throw new ArvoreJaExiste(idArvore);
       }
-   }
-  
-  public Arvore getArvore(String idArvore) throws ArvoreNaoExiste{
+    }
+  }
+
+  /**
+   * Sets neutral influence of a habitat on a species.
+   * @param especie The species.
+   * @param habitatParaMudar The habitat.
+   */
+  private void mudarInfluenciaHabitatEspecieNEUTRA(Especie especie, Habitat habitatParaMudar) {
+    for(Habitat habitat : especie.getHabitatsAdequados()){
+      //loops through all good habitats for the specie and checks if the habitat was a good one before changing
+      if(habitat.equals(habitatParaMudar)){
+        //the habitat had good influence in the specie, so now we need to remove
+        especie.removeHabitatAdequado(habitat);
+        if(!_alteracoes){
+          changeAlteracoes();
+        }
+        //ends the function since if it was a good one, it can not be a bad one too, so there is no need to continue
+        return;
+      }
+    }
+    for(Habitat habitat : especie.getHabitatsMaus()){
+      //loops through all bad habitats for the specie and checks if the habitat was a bad one before changing
+      if(habitat.equals(habitatParaMudar)){
+        //the habitat had bad influence in the specie, so now we need to remove
+        especie.removeHabitatMau(habitat);
+        if(!_alteracoes){
+          changeAlteracoes();
+        }
+      }
+    }
+  }
+
+  /**
+   * Adds a new tree to the system.
+   * @param idArvore The ID of the tree.
+   * @param nome The name of the tree.
+   * @param idade The age of the tree.
+   * @param dificuldadeBase The base difficulty of growing the tree.
+   * @param tipo The type of tree: "PER" for perennial or "CAD" for deciduous.
+   * @throws ArvoreJaExiste If the tree already exists.
+   */
+  public void novaArvore(String idArvore, String nome, int idade, int dificuldadeBase, String tipo) throws ArvoreJaExiste {
+    if(verificarIdArvore(idArvore)){
+      Arvore newArvore;
+      if(tipo.equals("PER")){  // Perene
+        newArvore = new Perene(idArvore, nome, dificuldadeBase, _estacao);
+        _arvores.add(newArvore);
+      } else {  // Caduca
+        newArvore = new Caduca(idArvore, nome, dificuldadeBase, _estacao);
+        _arvores.add(newArvore);
+      }
+    } else {
+      throw new ArvoreJaExiste(idArvore);
+    }
+  }
+
+  /**
+   * Gets a tree by its ID.
+   * @param idArvore The ID of the tree.
+   * @return The tree object.
+   * @throws ArvoreNaoExiste If the tree does not exist.
+   */
+  public Arvore getArvore(String idArvore) throws ArvoreNaoExiste {
     for(Arvore arvore : _arvores){
       if(arvore.getId().toLowerCase().equals(idArvore.toLowerCase())){
         return arvore;
@@ -509,60 +841,109 @@ public class Hotel implements Serializable {
     throw new ArvoreNaoExiste(idArvore);
   }
 
-
-  // Usada para o Parser, pois cria-se primeiro as arvores e só depois se cria o habitat que possui as arvores
-  public void plantarArvoreExistente(String idHabitat, String idArvore) throws ArvoreNaoExiste, HabitatNaoExiste{ 
+  /**
+   * Plants an existing tree in a habitat. 
+   * Used by the parser for tree creation, since it creates the trees before creating the habitat they are in.
+   * @param idHabitat The ID of the habitat.
+   * @param idArvore The ID of the tree.
+   * @throws ArvoreNaoExiste If the tree does not exist.
+   * @throws HabitatNaoExiste If the habitat does not exist.
+   */
+  public void plantarArvoreExistente(String idHabitat, String idArvore) throws ArvoreNaoExiste, HabitatNaoExiste { 
     if(!verificarIdArvore(idArvore)){
       plantarArvore(idHabitat, idArvore);
-    }else{
-      throw new ArvoreNaoExiste(idArvore);
-    }
- }
-
- //usada para o plantarArvores, pois cria-se primeiro o habitat e só depois se cria a arvore que vai ser colocada no habitat
-  public void plantarArvoreNaoExistente(String idHabitat, String idArvore, String nome, int idade, int dificuldadeBase, String tipo) throws HabitatNaoExiste, ArvoreNaoExiste, ArvoreJaExiste{ 
-    if(verificarIdArvore(idArvore)){
-        novaArvore(idArvore, nome, idade, dificuldadeBase, tipo);
-      plantarArvore(idHabitat, idArvore);
-    }else{
+    } else {
       throw new ArvoreNaoExiste(idArvore);
     }
   }
 
-  private void plantarArvore(String idHabitat, String idArvore) throws ArvoreNaoExiste, HabitatNaoExiste{
-  Arvore arvore = getArvore(idArvore);
-  Habitat habitat = getHabitat(idHabitat);
-  habitat.addArvore(arvore);
+  /**
+   * Plants a non-existent tree in a habitat. 
+   * Used by plantarArvores for tree creation, since we first create the Habitat and then we plant the tree in it.
+   * @param idHabitat The ID of the habitat.
+   * @param idArvore The ID of the tree.
+   * @param nome The name of the tree.
+   * @param idade The age of the tree.
+   * @param dificuldadeBase The base difficulty of growing the tree.
+   * @param tipo The type of tree: "PER" for perennial or "CAD" for deciduous.
+   * @throws HabitatNaoExiste If the habitat does not exist.
+   * @throws ArvoreNaoExiste If the tree does not exist.
+   * @throws ArvoreJaExiste If the tree already exists.
+   */
+  public void plantarArvoreNaoExistente(String idHabitat, String idArvore, String nome, int idade, int dificuldadeBase, String tipo) throws HabitatNaoExiste, ArvoreNaoExiste, ArvoreJaExiste {
+    if(verificarIdArvore(idArvore)){
+      novaArvore(idArvore, nome, idade, dificuldadeBase, tipo);
+      plantarArvore(idHabitat, idArvore);
+    } else {
+      throw new ArvoreNaoExiste(idArvore);
+    }
+  }
+
+  /**
+   * Plants a tree in a habitat.
+   * @param idHabitat The ID of the habitat.
+   * @param idArvore The ID of the tree.
+   * @throws ArvoreNaoExiste If the tree does not exist.
+   * @throws HabitatNaoExiste If the habitat does not exist.
+   */
+  private void plantarArvore(String idHabitat, String idArvore) throws ArvoreNaoExiste, HabitatNaoExiste {
+    Arvore arvore = getArvore(idArvore);
+    Habitat habitat = getHabitat(idHabitat);
+    habitat.addArvore(arvore);
     if(!_alteracoes){
       changeAlteracoes();
     }
-}
+  }
 
-  public ArrayList <Arvore> getArvoresHabitat(Habitat habitat){
+
+    /**
+   * Retrieves the list of trees in a specific habitat.
+   * @param habitat The habitat from which to retrieve the trees.
+   * @return A list of trees in the habitat.
+   */
+  public ArrayList<Arvore> getArvoresHabitat(Habitat habitat){
     return habitat.getArvores();
   }
 
-  public SortedSet <Vacina> getAllVacinas(){
+  /**
+   * Retrieves all vaccines in the system.
+   * @return A sorted set of all vaccines.
+   */
+  public SortedSet<Vacina> getAllVacinas(){
     return _vacinas;
   }
 
-  public void novaVacina(String idVacina, String nome, String[] idEspecies) throws VacinaJaExiste, EspecieNaoExiste{
+  /**
+   * Adds a new vaccine to the system and associates it with species.
+   * @param idVacina The ID of the vaccine.
+   * @param nome The name of the vaccine.
+   * @param idEspecies Array of species IDs that this vaccine can be applied to.
+   * @throws VacinaJaExiste If the vaccine already exists.
+   * @throws EspecieNaoExiste If one of the species does not exist.
+   */
+  public void novaVacina(String idVacina, String nome, String[] idEspecies) throws VacinaJaExiste, EspecieNaoExiste {
     if(verificarIdVacina(idVacina)){
-      Vacina newVacina = new Vacina(idVacina,nome);
+      Vacina newVacina = new Vacina(idVacina, nome);
       for(String idEspecieSuposta : idEspecies){
         Especie especie = getEspecie(idEspecieSuposta);
-        if(especie==null){
+        if(especie == null){
           throw new EspecieNaoExiste(idEspecieSuposta);
         }  
         newVacina.addEspecieSuposta(especie);
       }
       _vacinas.add(newVacina);
-    }else{
+    } else {
       throw new VacinaJaExiste(idVacina);
     }
   }
 
-  private Vacina getVacina(String idVacina) throws VacinaNaoExiste{
+  /**
+   * Retrieves a vaccine by its ID.
+   * @param idVacina The ID of the vaccine.
+   * @return The vaccine object.
+   * @throws VacinaNaoExiste If the vaccine does not exist.
+   */
+  private Vacina getVacina(String idVacina) throws VacinaNaoExiste {
     for(Vacina vacina : _vacinas){
       if(vacina.getId().toLowerCase().equals(idVacina.toLowerCase())){
         return vacina;
@@ -571,18 +952,29 @@ public class Hotel implements Serializable {
     throw new VacinaNaoExiste(idVacina);
   }
 
-  public void vacinarAnimal(String idVacina, String idVeterinario, String idAnimal) throws VeterinarioNaoAutorizado, FuncionarioNaoExiste, VacinaNaoExiste, AnimalNaoExiste, VeterinarioNaoExiste{
-    Animal animalVacinado=getAnimal(idAnimal);
-    Veterinario veterinarioDeuVacina=(Veterinario) getFuncionario(idVeterinario);
-    Vacina vacinaDada=getVacina(idVacina);
-    if(veterinarioDeuVacina==null){
+  /**
+   * Vaccinates an animal with a specific vaccine administered by a veterinarian.
+   * @param idVacina The ID of the vaccine.
+   * @param idVeterinario The ID of the veterinarian.
+   * @param idAnimal The ID of the animal.
+   * @throws VeterinarioNaoAutorizado If the veterinarian is not authorized to vaccinate the animal's species.
+   * @throws FuncionarioNaoExiste If the veterinarian does not exist.
+   * @throws VacinaNaoExiste If the vaccine does not exist.
+   * @throws AnimalNaoExiste If the animal does not exist.
+   * @throws VeterinarioNaoExiste If the veterinarian does not exist.
+   */
+  public void vacinarAnimal(String idVacina, String idVeterinario, String idAnimal) throws VeterinarioNaoAutorizado, FuncionarioNaoExiste, VacinaNaoExiste, AnimalNaoExiste, VeterinarioNaoExiste {
+    Animal animalVacinado = getAnimal(idAnimal);
+    Veterinario veterinarioDeuVacina = (Veterinario) getFuncionario(idVeterinario);
+    Vacina vacinaDada = getVacina(idVacina);
+    if(veterinarioDeuVacina == null){
       throw new VeterinarioNaoExiste(idVeterinario);
     }
 
     boolean naoPodeDarVacina = true;
     for(Especie especie : veterinarioDeuVacina.getEspeciesPode()){
       if(especie.equals(animalVacinado.getEspecie())){
-        naoPodeDarVacina=false;
+        naoPodeDarVacina = false;
         break;
       }
     }
@@ -598,26 +990,48 @@ public class Hotel implements Serializable {
     veterinarioDeuVacina.addVacinacao(newRegisto);
   }
 
-  public ArrayList<Animal> getAnimaisHabitat(String idHabitat) throws HabitatNaoExiste{
+  /**
+   * Retrieves the list of animals in a specific habitat.
+   * @param idHabitat The ID of the habitat.
+   * @return A list of animals in the habitat.
+   * @throws HabitatNaoExiste If the habitat does not exist.
+   */
+  public ArrayList<Animal> getAnimaisHabitat(String idHabitat) throws HabitatNaoExiste {
     Habitat habitat = getHabitat(idHabitat);
     return habitat.getAnimais();
   }
 
-  public ArrayList<RegistoVacina> getVacinasAnimal(String idAnimal) throws AnimalNaoExiste{
+  /**
+   * Retrieves the vaccination records of a specific animal.
+   * @param idAnimal The ID of the animal.
+   * @return A list of vaccination records for the animal.
+   * @throws AnimalNaoExiste If the animal does not exist.
+   */
+  public ArrayList<RegistoVacina> getVacinasAnimal(String idAnimal) throws AnimalNaoExiste {
     Animal animal = getAnimal(idAnimal);
     return animal.getVacinacoes();
-  } 
-  
+  }
 
-  public ArrayList<RegistoVacina> getVacinasVeterinario(String idVeterinario) throws VeterinarioNaoExiste, FuncionarioNaoExiste{
+  /**
+   * Retrieves the vaccination records of a specific veterinarian.
+   * @param idVeterinario The ID of the veterinarian.
+   * @return A list of vaccination records administered by the veterinarian.
+   * @throws VeterinarioNaoExiste If the veterinarian does not exist.
+   * @throws FuncionarioNaoExiste If the employee does not exist.
+   */
+  public ArrayList<RegistoVacina> getVacinasVeterinario(String idVeterinario) throws VeterinarioNaoExiste, FuncionarioNaoExiste {
     if(!verificarIdFuncionario(idVeterinario)){
-      Veterinario veterinario = (Veterinario) getFuncionario(idVeterinario);  //downcast de Funcionario para Veterinario
+      Veterinario veterinario = (Veterinario) getFuncionario(idVeterinario);  // Downcast from Funcionario to Veterinario
       return veterinario.getVacinacoes();
-    }else{
+    } else {
       throw new VeterinarioNaoExiste(idVeterinario);
     }
   }
 
+  /**
+   * Retrieves all vaccination records in the system.
+   * @return A list of all vaccination records.
+   */
   public ArrayList<RegistoVacina> getVacinasMas(){
     return _registoVacinas;
   }

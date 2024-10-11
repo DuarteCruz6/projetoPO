@@ -2,7 +2,6 @@ package hva.app.main;
 
 import hva.core.*;
 import pt.tecnico.uilib.menus.Command;
-//FIXME add more imports if needed
 
 /**
  * Command for advancing the season of the system.
