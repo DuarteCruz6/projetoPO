@@ -1,14 +1,8 @@
 package hva.app.employee;
 
-import hva.app.exception.NoResponsibilityException;
-import hva.app.exception.UnknownEmployeeKeyException;
-import hva.app.exception.UnknownHabitatKeyException;
-import hva.app.exception.UnknownSpeciesKeyException;
+import hva.app.exception.*;
 import hva.core.Hotel;
-import hva.core.exception.EspecieNaoExiste;
-import hva.core.exception.FuncionarioNaoExiste;
-import hva.core.exception.HabitatNaoExiste;
-import hva.core.exception.NaoResponsabilidade;
+import hva.core.exception.*;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 
@@ -22,27 +16,36 @@ class DoAddResponsibility extends Command<Hotel> {
   DoAddResponsibility(Hotel receiver) throws CommandException {
     super(Label.ADD_RESPONSABILITY, receiver);
     _hotel = receiver;
+    //guarda o valor do input recebido no prompt com a chave idFuncionario e idResponsabilidade
     addStringField("idFuncionario", Prompt.employeeKey());
     addStringField("idResponsabilidade", Prompt.responsibilityKey());
   }
   
   @Override
   protected void execute() throws CommandException {
-      String idFuncionario = stringField("idFuncionario");
-      String idResponsabilidade = stringField("idFuncionario");
+    //carrega o valor do input recebido no prompt com a chave idFuncionario para a variavel idFuncionario
+    String idFuncionario = stringField("idFuncionario");
+    //carrega o valor do input recebido no prompt com a chave idResponsabilidade para a variavel idResponsabilidade
+    String idResponsabilidade = stringField("idResponsabilidade");
+
     try {
-      try {
-        _hotel.novaResponsabilidade(idFuncionario, idResponsabilidade);
-      } catch (FuncionarioNaoExiste e) {
-        throw new UnknownEmployeeKeyException(idFuncionario);
-      } catch (EspecieNaoExiste e) {
-        //caso o funcionário seja um veterinário, lançará esta exceção se a responsabilidade (espécie) não existir
-        throw new UnknownSpeciesKeyException(idResponsabilidade);    
-      } catch (HabitatNaoExiste e) {
-         //caso o funcionário seja um tratador, lançará esta exceção se a responsabilidade (habitat) não existir
-        throw new UnknownHabitatKeyException(idResponsabilidade);      
-      }
+      //adiciona a responsabilidade com id idResponsabilidade ao funcionario com id idFuncionario
+      _hotel.novaResponsabilidade(idFuncionario, idResponsabilidade);
+
+    } catch (FuncionarioNaoExiste e) {
+      //nao ha funcionario com este id
+      throw new UnknownEmployeeKeyException(idFuncionario);
+
+    } catch (EspecieNaoExiste e) {
+      //caso o funcionário seja um veterinário, lançará esta exceção se a responsabilidade (espécie) não existir
+      throw new UnknownSpeciesKeyException(idResponsabilidade);  
+
+    } catch (HabitatNaoExiste e) {
+       //caso o funcionário seja um tratador, lançará esta exceção se a responsabilidade (habitat) não existir
+      throw new UnknownHabitatKeyException(idResponsabilidade);
+
     } catch (NaoResponsabilidade e) {
+      //nao ha habitat ou animal com este id
       throw new NoResponsibilityException(idFuncionario, idResponsabilidade);
     }
   }

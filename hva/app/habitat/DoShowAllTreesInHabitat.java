@@ -8,7 +8,6 @@ import hva.core.exception.HabitatNaoExiste;
 import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
-//FIXME add more imports if needed
 
 /**
  * Show all trees in a given habitat.
@@ -19,21 +18,23 @@ class DoShowAllTreesInHabitat extends Command<Hotel> {
   DoShowAllTreesInHabitat(Hotel receiver) throws CommandException {
     super(Label.SHOW_TREES_IN_HABITAT, receiver);
     _hotel=receiver; 
+    //guarda o valor do input recebido no prompt com a chave idHabitat
     addStringField("idHabitat", Prompt.habitatKey());
   }
   
   @Override
   protected void execute() throws CommandException {
-      Display display = new Display();
-      String idHabitat = stringField("idHabitat");
-    Habitat habitat;
+    Display display = new Display();
+    //carrega o valor do input recebido no prompt com a chave idHabitat para a variavel idHabitat
+    String idHabitat = stringField("idHabitat");
     try {
-      habitat = _hotel.getHabitat(idHabitat);
-    } catch (HabitatNaoExiste e) {
-      throw new UnknownHabitatKeyException(idHabitat);
-    }
-    for(Arvore arvore : _hotel.getArvoresHabitat(habitat)){
-      String string = "";
+      //carrega o habitat com id idHabitat 
+      Habitat habitat = _hotel.getHabitat(idHabitat);
+      for(Arvore arvore : _hotel.getArvoresHabitat(habitat)){
+        //percorre todas as arvores do habitat
+
+        //inicializa a String string e vai adicionando os elementos necessarios
+        String string = "";
         string+="ARVORE";
         string+="|";
         string+=arvore.getId();
@@ -47,8 +48,13 @@ class DoShowAllTreesInHabitat extends Command<Hotel> {
         string+=arvore.getTipo();
         string+="|";
         string+=arvore.getCicloBiologico(_hotel.getEstacao());
+        //da print à string
         display.addLine(string);
       }
       display.display();
+    } catch (HabitatNaoExiste e) {
+      //nao ha habitat com este id
+      throw new UnknownHabitatKeyException(idHabitat);
+    }
   }
 }

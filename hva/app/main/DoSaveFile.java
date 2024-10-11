@@ -22,12 +22,17 @@ class DoSaveFile extends Command<HotelManager> {
   @Override
   protected final void execute() throws CommandException {
     try {
+      //da save no ficheiro atual
       _HotelManager.save();
     } catch (MissingFileAssociationException | IOException e) {
+      //nao estamos em nenhum ficheiro
       try {
+        //entao perguntamos ao user qual o nome que quer dar ao ficheiro novo
+        //no qual vamos guardar as informacoes
         String filename = Form.requestString(Prompt.newSaveAs());
         _HotelManager.saveAs(filename);
       } catch (MissingFileAssociationException| UnavailableFileException | IOException ex) {
+        //nunca vai acontecer
       }
     } 
   }

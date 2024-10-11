@@ -22,6 +22,9 @@ class DoShowAllVaccines extends Command<Hotel> {
   protected final void execute() {
     Display display = new Display();
     for(Vacina vacina : _hotel.getAllVacinas()){
+      //percorre todas as vacinas do hotel
+
+      //inicializa a String string e vai adicionando os elementos necessario
       String string ="";
       string+="VACINA";
       string+="|";
@@ -32,10 +35,12 @@ class DoShowAllVaccines extends Command<Hotel> {
       string+=vacina.getNumAdministracoes();
       string+="|";
       for(Especie especie : vacina.getEspeciesSupostas()){
+        //percorre todas as especies que podem levar a vacina
         string+=especie.getId();
         string+=",";
       }
-      display.addLine(string.substring(0,string.length()-1));     //adiciona sempre um caracter a mais (ou virgula ou um |)
+      //da print à string, exceto o ultimo caracter, pois adiciona sempre um a mais (ou virgula ou um |)
+      display.addLine(string.substring(0,string.length()-1));    
     }
     display.display();
   }

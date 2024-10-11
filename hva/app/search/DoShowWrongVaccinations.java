@@ -16,14 +16,17 @@ class DoShowWrongVaccinations extends Command<Hotel> {
   DoShowWrongVaccinations(Hotel receiver) throws CommandException {
     super(Label.WRONG_VACCINATIONS, receiver);
     _hotel=receiver;
-    //execute();
   }
 
   @Override
   protected void execute() throws CommandException {
     Display display = new Display();
     for(RegistoVacina registo : _hotel.getVacinasMas()){
+      //percorre todos os registos de vacina do hotel
+
       if (registo.getDano()>0){
+        //a vacina causou dano ao animal, entao é para dar print
+        //inicializa a String string e vai adicionando os elementos necessarios
         String string ="";
         string+="REGISTO-VACINA";
         string+="|";
@@ -32,6 +35,7 @@ class DoShowWrongVaccinations extends Command<Hotel> {
         string+=registo.getVeterinario().getId();
         string+="|";
         string+=registo.getAnimal().getEspecie().getId();
+        //da print à string
         display.addLine(string);
       }
     }

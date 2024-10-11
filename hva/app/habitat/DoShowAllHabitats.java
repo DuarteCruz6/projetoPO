@@ -17,14 +17,19 @@ class DoShowAllHabitats extends Command<Hotel> {
   DoShowAllHabitats(Hotel receiver) {
     super(Label.SHOW_ALL_HABITATS, receiver);
     _hotel=receiver;
-    //execute();
   }
   
   @Override
   protected void execute() {
+    //guarda todos os habitats do hotel em allHabitats
     SortedSet <Habitat> allHabitats = _hotel.getAllHabitats();
+
     Display display = new Display();
+
     for(Habitat habitat : allHabitats){
+      //percorre todos os habitats do hotel
+
+      //inicializa a String string e vai adicionando os elementos necessarios
       String string = "";
       string+="HABITAT";
       string+="|";
@@ -35,9 +40,13 @@ class DoShowAllHabitats extends Command<Hotel> {
       string+=habitat.getArea();
       string+="|";
       string+=habitat.getNumArvores();
+      //da print à string com as informacoes do habitat
+      display.addLine(string);
+
       for(Arvore arvore : _hotel.getArvoresHabitat(habitat)){
-        string+="ARVORE";
-        string+="|";
+        //percorre todas as arvores pertencentes ao habitat
+        //inicializa a String string e vai adicionando os elementos necessarios
+        string="ARVORE|";
         string+=arvore.getId();
         string+="|";
         string+=arvore.getNome();
@@ -49,8 +58,10 @@ class DoShowAllHabitats extends Command<Hotel> {
         string+=arvore.getTipo();
         string+="|";
         string+=arvore.getCicloBiologico(_hotel.getEstacao());
+        //da print à string com as informacoes da arvore
+        display.addLine(string);
       }
-      display.addLine(string);
+
     }
     display.display();
   }

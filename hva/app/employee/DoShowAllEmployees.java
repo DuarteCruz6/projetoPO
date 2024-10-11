@@ -6,7 +6,6 @@ import hva.core.Tratador;
 import hva.core.Veterinario;
 import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
-//FIXME add more imports if needed
 
 /**
  * Show all employees of this zoo hotel.
@@ -23,6 +22,9 @@ class DoShowAllEmployees extends Command<Hotel> {
   protected void execute(){
   Display display = new Display();
     for(Funcionario funcionario : _hotel.getFuncionarios()){
+      //percorre todos os funcionarios do hotel
+
+      //inicializa a String string e vai adicionando os elementos necessarios
       String string = "";
       string+=funcionario.getTipo();
       string+="|";
@@ -30,19 +32,22 @@ class DoShowAllEmployees extends Command<Hotel> {
       string+="|";
       string+=funcionario.getNome();
       string+="|";
-      if(funcionario instanceof Veterinario veterinario){     //Cast para Veterinario
+      if(funcionario instanceof Veterinario veterinario){     //Cast para Veterinario caso seja veterinario
         for(String id : veterinario.getIdEspeciesTratadas()){
+          //percorre todas as especies que o veterinario trata
           string+=id;
           string+=",";
         }
       }else{
-        Tratador tratador = (Tratador) funcionario;  // Cast para Tratador
+        Tratador tratador = (Tratador) funcionario;  // Cast para Tratador caso seja tratador
         for(String id : tratador.getIdHabitats()){
+          //percorre todos os habitats que o tratador trata
           string+=id;
           string+=",";
         }
       }
-      display.addLine(string.substring(0,string.length()-1));     //adiciona sempre um caracter a mais (ou virgula ou um |)
+      //da print à string, exceto o ultimo caracter, pois adiciona sempre um a mais (ou virgula ou um |)
+      display.addLine(string.substring(0,string.length()-1));
     }
   display.display();
   }

@@ -13,11 +13,11 @@ class DoAdvanceSeason extends Command<HotelManager> {
   DoAdvanceSeason(HotelManager receiver) {
     super(Label.ADVANCE_SEASON, receiver);
     _hotel= receiver.getHotel();
-    //execute();
   }
 
   @Override
   protected final void execute() {
+    //avança a estacao do ano
     _hotel.avancarEstacao();
   }
 }

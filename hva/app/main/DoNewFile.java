@@ -24,14 +24,18 @@ class DoNewFile extends Command<HotelManager> {
   @Override
   protected final void execute() throws CommandException {
     if(_hotelManager.houveAlteracoes()){
-      //se der true é porque houve alterações no hotel, então temos de perguntar ao user se quer guardar antes de sair                           
+      //se der true é porque houve alterações no hotel, então temos de perguntar ao user 
+      //se quer guardar antes de sair                           
       Boolean userQuerGuardar = Form.confirm(Prompt.saveBeforeExit());
       if(userQuerGuardar){
           //o user disse que quer guardar
           try {
+            //da save
             _hotelManager.save();
           } catch (FileNotFoundException | MissingFileAssociationException e) {
+            //nao estamos em nenhum ficheiro
             try {
+              //entao pedimos o nome do novo ficheiro no qual vamos guardar as informacoes
               String filename = Form.requestString(Prompt.newSaveAs());
               _hotelManager.saveAs(filename);
             } catch (FileNotFoundException | MissingFileAssociationException | UnavailableFileException e1) {

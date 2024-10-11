@@ -1,5 +1,6 @@
 package hva.app.main;
 
+import hva.app.exception.FileOpenFailedException;
 import hva.core.HotelManager;
 import hva.core.exception.MissingFileAssociationException;
 import hva.core.exception.UnavailableFileException;
@@ -31,11 +32,13 @@ class DoOpenFile extends Command<HotelManager> {
         if(userQuerGuardar){
           //o user disse que quer guardar
           try {
+            //da save no ficheiro atual
             _hotelManager.save();
           } catch (FileNotFoundException | MissingFileAssociationException e) {
-            // caso não estejamos em nenhum ficheiro, então criamos um ficheiro e perguntamos ao user qual o nome, sendo que se guarda neste novo ficheiro
+            //não estamos em nenhum ficheiro, então criamos um ficheiro e perguntamos ao user qual o nome, sendo que se guarda neste novo ficheiro
             String filename = Form.requestString(Prompt.newSaveAs());
             try {
+              //da save no ficheiro criado com o nome que o user deu
               _hotelManager.saveAs(filename);
             } catch (FileNotFoundException | MissingFileAssociationException | UnavailableFileException e1) {
             }catch (IOException e1) {
@@ -44,10 +47,12 @@ class DoOpenFile extends Command<HotelManager> {
           }      
         }
       }
-    
       try {
+        //abre o ficheiro que o user quer
           _hotelManager.load(filenameToOpen);
       } catch (UnavailableFileException ex) {
+        //nao ha esse ficheiro
+        throw new FileOpenFailedException(ex);
       }
   }
 }

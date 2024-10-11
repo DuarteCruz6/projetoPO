@@ -7,7 +7,6 @@ import hva.core.exception.EspecieNaoExiste;
 import hva.core.exception.VacinaJaExiste;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
-//FIXME add more imports if needed
 
 /**
  * Apply a vaccine to a given animal.
@@ -18,21 +17,33 @@ class DoRegisterVaccine extends Command<Hotel> {
   DoRegisterVaccine(Hotel receiver) throws CommandException {
     super(Label.REGISTER_VACCINE, receiver);
     _hotel=receiver;
+    //guarda o valor do input recebido no prompt com a chave idVacina
     addStringField("idVacina", Prompt.vaccineKey());
+    //guarda o valor do input recebido no prompt com a chave nomeVacina
     addStringField("nomeVacina", Prompt.vaccineName());
+    //guarda o valor do input recebido no prompt com a chave idEspecies
     addStringField("idEspecies", hva.app.animal.Prompt.speciesKey());
   }
 
   @Override
   protected final void execute() throws CommandException {
+    //carrega o valor do input recebido no prompt com a chave idVacina para a variavel idFuncionario
     String idVacina = stringField("idVacina");
-    String nome = stringField("nomeVacina");
+    //carrega o valor do input recebido no prompt com a chave nomeVacina para a variavel nomeVacina
+    String nomeVacina = stringField("nomeVacina");
+    //carrega o valor do input recebido no prompt com a chave idEspecies, dividindo a string a cada vírgula
+    //passando para lista de Strings, para a variavel idEspecies
     String[] idEspecies = stringField("idEspecies").split(",");
+
     try {
-      _hotel.novaVacina(idVacina, nome, idEspecies);
+      //cria uma vacina com id idVacina, nome nomeVacina e cujas especies que podem levar de id idEspecies
+      _hotel.novaVacina(idVacina, nomeVacina, idEspecies);
     } catch (VacinaJaExiste e) {
+      //ja ha vacina com este id
       throw new DuplicateVaccineKeyException(idVacina);
+
     } catch (EspecieNaoExiste e) {
+      //nao ha especie com este id
       throw new UnknownSpeciesKeyException("um dos Id's das espécies");
     }
   }
