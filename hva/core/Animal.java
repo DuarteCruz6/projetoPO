@@ -26,7 +26,7 @@ public class Animal implements Serializable,Comparable<Animal>{
     }
 
     public int getSatisfacao(){
-        //return the animal's satisfaction
+        //returns the animal's satisfaction
         return calcularSatisfacao();
     }
 

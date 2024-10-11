@@ -103,7 +103,6 @@ public class Parser{
   }
 
   // Parse a line with format VACINA|id|nome|idEspécie1,...,idEspécieN
-  // Parse a line with format VACINA|id|nome|idEspécie1,...,idEspécieN
   private void parseVaccine(String[] components, String empType) throws VacinaJaExiste, UnrecognizedEntryException, EspecieNaoExiste{
     try {
       String id = components[1];
