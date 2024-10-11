@@ -225,7 +225,7 @@ public class Hotel implements Serializable {
 
   public Habitat getHabitat(String idHabitat) throws HabitatNaoExiste{
     for(Habitat habitat : _habitats){
-      if(habitat.getId().equals(idHabitat)){
+      if(habitat.getId().toLowerCase().equals(idHabitat.toLowerCase())){
         return habitat;
       }
     }
@@ -234,7 +234,7 @@ public class Hotel implements Serializable {
 
   private Especie getEspecie(String idEspecie) throws EspecieNaoExiste{
     for(Especie especie : _especies){
-      if(especie.getId().equals(idEspecie)){
+      if(especie.getId().toLowerCase().equals(idEspecie.toLowerCase())){
         return especie;
       }
     }
@@ -279,7 +279,7 @@ public class Hotel implements Serializable {
 
   public Animal getAnimal(String idAnimal) throws AnimalNaoExiste{
     for(Animal animal : _animais){
-      if(animal.getId().equals(idAnimal)){
+      if(animal.getId().toLowerCase().equals(idAnimal.toLowerCase())){
         return animal;
       }
     }
@@ -326,7 +326,7 @@ public class Hotel implements Serializable {
 
   private Funcionario getFuncionario(String idFuncionario) throws FuncionarioNaoExiste{
     for(Funcionario funcionario : _funcionarios){
-      if(funcionario.getId().equals(idFuncionario)){
+      if(funcionario.getId().toLowerCase().equals(idFuncionario.toLowerCase())){
         return funcionario;
       }
     }
@@ -502,7 +502,7 @@ public class Hotel implements Serializable {
   
   public Arvore getArvore(String idArvore) throws ArvoreNaoExiste{
     for(Arvore arvore : _arvores){
-      if(arvore.getId().equals(idArvore)){
+      if(arvore.getId().toLowerCase().equals(idArvore.toLowerCase())){
         return arvore;
       }
     }
@@ -564,7 +564,7 @@ public class Hotel implements Serializable {
 
   private Vacina getVacina(String idVacina) throws VacinaNaoExiste{
     for(Vacina vacina : _vacinas){
-      if(vacina.getId().equals(idVacina)){
+      if(vacina.getId().toLowerCase().equals(idVacina.toLowerCase())){
         return vacina;
       }
     }
