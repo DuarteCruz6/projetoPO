@@ -18,7 +18,7 @@ class DoVaccinateAnimal extends Command<Hotel> {
     //guarda o valor do input recebido no prompt com a chave idVacina
     addStringField("idVacina", Prompt.vaccineKey());
     //guarda o valor do input recebido no prompt com a chave idVeterinario
-    addStringField("idVeterinario", hva.app.employee.Prompt.employeeKey());
+    addStringField("idVeterinario", Prompt.veterinarianKey());
     //guarda o valor do input recebido no prompt com a chave idAnimal
     addStringField("idAnimal", hva.app.animal.Prompt.animalKey());
   }
