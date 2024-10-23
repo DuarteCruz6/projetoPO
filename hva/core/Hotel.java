@@ -1025,13 +1025,7 @@ public class Hotel implements Serializable {
     }
   }
 
-  /**
-   * Retrieves all vaccination records in the system.
-   * @return A list of all vaccination records.
-   */
-  public ArrayList<RegistoVacina> getVacinasMas(){
-    return _registoVacinas;
-  }
+
 
   public ArrayList<RegistoVacina> getRegistosVacinas(){
     return _registoVacinas;

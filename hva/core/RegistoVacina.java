@@ -52,12 +52,10 @@ public class RegistoVacina implements Serializable{
             //gets the length of the biggest name, when comparing the specie that can take 
             //the vaccine and the animal's specie
             int maxTamanho= maiorNome(especieAtual,especieQueLevou);
-            System.out.println("maxTamanho "+ maxTamanho);
 
             //gets the number of letters in common, when comparing the specie that can take 
             //the vaccine and the animal's specie
             int numCaracteresComum= caracteresComum(especieAtual,especieQueLevou);
-            System.out.println("numCaracteresComum "+ numCaracteresComum);
 
             //damage on this case = max length - number of letters in common
             int danoDesteCaso= maxTamanho-numCaracteresComum;
@@ -75,7 +73,6 @@ public class RegistoVacina implements Serializable{
         _termo=_vacina.calculateTermoVacinacao(dano);
 
         //returns the damage 
-        System.out.println("dano "+ dano);
         return dano;
     }
 

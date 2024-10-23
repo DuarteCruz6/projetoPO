@@ -19,7 +19,7 @@ class DoShowWrongVaccinations extends Command<Hotel> {
   @Override
   protected void execute() throws CommandException {
     Display display = new Display();
-    for(RegistoVacina registo : _hotel.getVacinasMas()){
+    for(RegistoVacina registo : _hotel.getRegistosVacinas()){
       //percorre todos os registos de vacina do hotel
 
       if (registo.getDano()>0){
