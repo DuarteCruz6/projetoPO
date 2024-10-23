@@ -449,6 +449,7 @@ public class Hotel implements Serializable {
         Animal newAnimal = new Animal(idAnimal, nome, habitatAnimal, especieAnimal);
         _animais.add(newAnimal);
         especieAnimal.addAnimal();
+        habitatAnimal.addAnimal(newAnimal);
     } else {
         throw new AnimalJaExiste(idAnimal);
     }

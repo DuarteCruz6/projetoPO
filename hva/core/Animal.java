@@ -34,9 +34,8 @@ public class Animal implements Serializable,Comparable<Animal>{
         //calculates the aimal's satisfaction
         // satisfaction = 20 + 3*(number of animals from the same habitat from the same species) - 2*(number of animals from the same habitat from different species)
         //                + (total habitat area)/(number of animals of the habitat) + habitat's adequation to the species
-
+        
         int satisfacao=20;
-
         //gets the number of animals from the same habitat from the same species
         int numAnimaisMesmaEspecieMesmoHabitat= _habitat.getNumAnimais(_especie);
 
@@ -89,6 +88,7 @@ public class Animal implements Serializable,Comparable<Animal>{
             if(habitatAtual.equals(_habitat)){
                 //the habitat is good for the animal, which means the adequation = 20
                 _adequacaoHabitat=20;
+                return;
             }
         }
         for(Habitat habitatAtual : _especie.getHabitatsMaus()){
@@ -96,6 +96,7 @@ public class Animal implements Serializable,Comparable<Animal>{
             if(habitatAtual.equals(_habitat)){
                 //the habitat is bad for the animal, which means the adequation = -20
                 _adequacaoHabitat=-20;
+                return;
             }
         }
         //the habitat isn't good or bad, which means the adequation = 0
