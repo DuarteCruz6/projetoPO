@@ -14,6 +14,6 @@ public class EspecieNaoExiste extends Exception {
    * @param idEspecie id the user gave that doesn't exist
    **/
   public EspecieNaoExiste(String idEspecie) {
-    super("IdEspecie não existe: " + idEspecie);
+    super(idEspecie);
   }
 }

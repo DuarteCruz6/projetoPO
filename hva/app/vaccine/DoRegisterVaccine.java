@@ -44,7 +44,7 @@ class DoRegisterVaccine extends Command<Hotel> {
 
     } catch (EspecieNaoExiste e) {
       //nao ha especie com este id
-      throw new UnknownSpeciesKeyException("um dos Id's das espécies");
+      throw new UnknownSpeciesKeyException(e.getMessage());
     }
   }
 }
