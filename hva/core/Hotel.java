@@ -901,7 +901,7 @@ public class Hotel implements Serializable {
    * @param habitat The habitat from which to retrieve the trees.
    * @return A list of trees in the habitat.
    */
-  public ArrayList<Arvore> getArvoresHabitat(Habitat habitat){
+  public SortedSet<Arvore> getArvoresHabitat(Habitat habitat){
     return habitat.getArvores();
   }
 
@@ -996,7 +996,7 @@ public class Hotel implements Serializable {
    * @return A list of animals in the habitat.
    * @throws HabitatNaoExiste If the habitat does not exist.
    */
-  public ArrayList<Animal> getAnimaisHabitat(String idHabitat) throws HabitatNaoExiste {
+  public SortedSet<Animal> getAnimaisHabitat(String idHabitat) throws HabitatNaoExiste {
     Habitat habitat = getHabitat(idHabitat);
     return habitat.getAnimais();
   }

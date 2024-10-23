@@ -11,8 +11,8 @@ public class Habitat implements Serializable, Comparable<Habitat>{
     private int _area;
     private int _numTratadores;
     private int _numAnimais;
-    private final ArrayList <Arvore> _arvoresPresentes;
-    private final ArrayList <Animal> _animaisPresentes;
+    private final SortedSet <Arvore> _arvoresPresentes;
+    private final SortedSet <Animal> _animaisPresentes;
 
     public Habitat(String id, String nome, int area){
         //creating an habitat
@@ -22,8 +22,8 @@ public class Habitat implements Serializable, Comparable<Habitat>{
         _numArvores=0;
         _numTratadores=0;
         _numAnimais=0;
-        _arvoresPresentes=new ArrayList<>();
-        _animaisPresentes=new ArrayList<>();
+        _arvoresPresentes=new TreeSet<>();
+        _animaisPresentes=new TreeSet<>();
     }
 
     public int getNumArvores(){
@@ -75,7 +75,7 @@ public class Habitat implements Serializable, Comparable<Habitat>{
         _numArvores++;
     }
 
-    ArrayList <Arvore> getArvores(){
+    SortedSet <Arvore> getArvores(){
         //returns the habitat's trees
         return _arvoresPresentes;
     }
@@ -90,7 +90,7 @@ public class Habitat implements Serializable, Comparable<Habitat>{
         return _area/_numAnimais;
     }
 
-    ArrayList <Animal> getAnimais(){
+    SortedSet <Animal> getAnimais(){
         //returns the habitat's animals
         return _animaisPresentes;
     }
