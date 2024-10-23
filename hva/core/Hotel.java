@@ -334,7 +334,7 @@ public class Hotel implements Serializable {
   * Advances the station (season) and updates the age of all trees based on the new station.
   * Marks the system as altered if necessary.
   */
-  public void avancarEstacao() {
+  public int avancarEstacao() {
     if (!_alteracoes) {
         changeAlteracoes();
     }
@@ -342,6 +342,7 @@ public class Hotel implements Serializable {
     for (Arvore arvore : _arvores) {
         arvore.checkAumentarIdade(_estacao);
     }
+    return _estacao.getEstacaoAtual();
   }
 
   /**
@@ -808,7 +809,7 @@ public class Hotel implements Serializable {
    * @param nome The name of the tree.
    * @param idade The age of the tree.
    * @param dificuldadeBase The base difficulty of growing the tree.
-   * @param tipo The type of tree: "PER" for perennial or "CAD" for deciduous.
+   * @param tipo The type of tree: "PERENE" for perennial or "CADUCA" for deciduous.
    * @throws ArvoreJaExiste If the tree already exists.
    */
   public void novaArvore(String idArvore, String nome, int idade, int dificuldadeBase, String tipo) throws ArvoreJaExiste {
@@ -870,13 +871,9 @@ public class Hotel implements Serializable {
    * @throws ArvoreNaoExiste If the tree does not exist.
    * @throws ArvoreJaExiste If the tree already exists.
    */
-  public void plantarArvoreNaoExistente(String idHabitat, String idArvore, String nome, int idade, int dificuldadeBase, String tipo) throws HabitatNaoExiste, ArvoreNaoExiste, ArvoreJaExiste {
-    if(verificarIdArvore(idArvore)){
-      novaArvore(idArvore, nome, idade, dificuldadeBase, tipo);
-      plantarArvore(idHabitat, idArvore);
-    } else {
-      throw new ArvoreNaoExiste(idArvore);
-    }
+  public Arvore plantarArvoreNaoExistente(String idHabitat, String idArvore, String nome, int idade, int dificuldadeBase, String tipo) throws HabitatNaoExiste, ArvoreNaoExiste, ArvoreJaExiste {
+    novaArvore(idArvore, nome, idade, dificuldadeBase, tipo);
+    return plantarArvore(idHabitat, idArvore);
   }
 
   /**
@@ -886,13 +883,14 @@ public class Hotel implements Serializable {
    * @throws ArvoreNaoExiste If the tree does not exist.
    * @throws HabitatNaoExiste If the habitat does not exist.
    */
-  private void plantarArvore(String idHabitat, String idArvore) throws ArvoreNaoExiste, HabitatNaoExiste {
+  private Arvore plantarArvore(String idHabitat, String idArvore) throws ArvoreNaoExiste, HabitatNaoExiste {
     Arvore arvore = getArvore(idArvore);
     Habitat habitat = getHabitat(idHabitat);
     habitat.addArvore(arvore);
     if(!_alteracoes){
       changeAlteracoes();
     }
+    return arvore;
   }
 
 

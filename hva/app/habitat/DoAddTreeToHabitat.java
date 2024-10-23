@@ -1,8 +1,10 @@
 package hva.app.habitat;
 
 import hva.app.exception.*;
+import hva.core.Arvore;
 import hva.core.Hotel;
 import hva.core.exception.*;
+import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
@@ -55,8 +57,8 @@ class DoAddTreeToHabitat extends Command<Hotel> {
     //carrega o valor do input recebido no prompt com a chave tipoArvore para a variavel tipoArvore
     String tipoArvore = stringField("tipoArvore");
     
-    while(!tipoArvore.equals("PER") && !tipoArvore.equals("CAD")){
-      //enquanto tipoArvore for diferente de "PER" (perene) ou "CAD" (caduca), pede 
+    while(!tipoArvore.equals("PERENE") && !tipoArvore.equals("CADUCA")){
+      //enquanto tipoArvore for diferente de "PERENE" ou "CADUCA", pede 
       //repetidamente para o user corrigir, até ser um valor válido
       tipoArvore = Form.requestString(Prompt.treeType());
       }
@@ -65,7 +67,23 @@ class DoAddTreeToHabitat extends Command<Hotel> {
       //cria uma arvore com id idArvore, nome nomeArvore, idade idadeArvore,
       //dificuldade base de limpeza dificuldadeArvore e tipo tipoArvore, 
       //e planta no habitat de id idHabitat
-      _hotel.plantarArvoreNaoExistente(idHabitat, idArvore, nomeArvore,idadeArvore, dificuldadeArvore,tipoArvore);
+      Arvore arvore = _hotel.plantarArvoreNaoExistente(idHabitat, idArvore, nomeArvore,idadeArvore, dificuldadeArvore,tipoArvore);
+      Display display = new Display();
+      String string="ÁRVORE|";
+      string+=arvore.getId();
+      string+="|";
+      string+=arvore.getNome();
+      string+="|";
+      string+=arvore.getIdade();
+      string+="|";
+      string+=arvore.getDificuldadeBase();
+      string+="|";
+      string+=arvore.getTipo();
+      string+="|";
+      string+=arvore.getCicloBiologico(_hotel.getEstacao());
+      //da print à string com as informacoes da arvore
+      display.addLine(string);
+      display.display();
     
     } catch (HabitatNaoExiste e) {
       //nao ha habitat com este id
@@ -78,7 +96,6 @@ class DoAddTreeToHabitat extends Command<Hotel> {
       //so é lançada caso seja para plantar uma arvore que ainda n foi criada
       //entao tem de se criar uma árvore nova para adicionar ao habitat de id idHabitat
       throw new DuplicateTreeKeyException(idArvore);
-
     }
   }
 }

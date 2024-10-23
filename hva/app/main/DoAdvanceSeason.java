@@ -1,6 +1,7 @@
 package hva.app.main;
 
 import hva.core.*;
+import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 
 /**
@@ -17,6 +18,9 @@ class DoAdvanceSeason extends Command<HotelManager> {
   @Override
   protected final void execute() {
     //avança a estacao do ano
-    _hotel.avancarEstacao();
+    int estacaoAtual = _hotel.avancarEstacao();
+    Display display = new Display();
+    display.addLine(estacaoAtual);
+    display.display();
   }
 }
