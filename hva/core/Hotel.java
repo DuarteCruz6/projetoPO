@@ -418,11 +418,8 @@ public class Hotel implements Serializable {
     if (verificarIdAnimal(idAnimal)) {
         Habitat habitatAnimal = getHabitat(idHabitat);
         Especie especieAnimal = getEspecie(idEspecie);
-        especieAnimal.addAnimal();
         Animal newAnimal = new Animal(idAnimal, nome, habitatAnimal, especieAnimal);
         _animais.add(newAnimal);
-        habitatAnimal.addAnimal(newAnimal);
-        especieAnimal.addAnimal();
     } else {
         throw new AnimalJaExiste(idAnimal);
     }
@@ -448,8 +445,6 @@ public class Hotel implements Serializable {
         Especie especieAnimal = getEspecie(idEspecie);
         Animal newAnimal = new Animal(idAnimal, nome, habitatAnimal, especieAnimal);
         _animais.add(newAnimal);
-        especieAnimal.addAnimal();
-        habitatAnimal.addAnimal(newAnimal);
     } else {
         throw new AnimalJaExiste(idAnimal);
     }
@@ -465,7 +460,6 @@ public class Hotel implements Serializable {
     if (verificarNomeEspecie(nome)) {
         Especie newEspecie = new Especie(id, nome);
         _especies.add(newEspecie);
-        newEspecie.addAnimal();
         addIdEspecie(id);
     }
   }

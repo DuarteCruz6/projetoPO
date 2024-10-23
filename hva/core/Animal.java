@@ -19,6 +19,7 @@ public class Animal implements Serializable,Comparable<Animal>{
         _nome=nome;
         _habitat= habitat;
         _especie=especie;
+        addAnimal(_habitat,_especie);
         _historicoSaude="";
         _vacinacoes=new ArrayList<>();
         changeAdequacaoHabitat();
@@ -28,6 +29,11 @@ public class Animal implements Serializable,Comparable<Animal>{
     public int getSatisfacao(){
         //returns the animal's satisfaction
         return calcularSatisfacao();
+    }
+
+    private void addAnimal(Habitat habitat, Especie especie){
+        especie.addAnimal();
+        habitat.addAnimal(this);
     }
 
     private int calcularSatisfacao(){
