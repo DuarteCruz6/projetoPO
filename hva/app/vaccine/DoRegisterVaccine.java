@@ -22,7 +22,7 @@ class DoRegisterVaccine extends Command<Hotel> {
     //guarda o valor do input recebido no prompt com a chave nomeVacina
     addStringField("nomeVacina", Prompt.vaccineName());
     //guarda o valor do input recebido no prompt com a chave idEspecies
-    addStringField("idEspecies", hva.app.animal.Prompt.speciesKey());
+    addStringField("idEspecies", Prompt.listOfSpeciesKeys());
   }
 
   @Override
