@@ -814,11 +814,11 @@ public class Hotel implements Serializable {
   public void novaArvore(String idArvore, String nome, int idade, int dificuldadeBase, String tipo) throws ArvoreJaExiste {
     if(verificarIdArvore(idArvore)){
       Arvore newArvore;
-      if(tipo.equals("PER")){  // Perene
-        newArvore = new Perene(idArvore, nome, dificuldadeBase, _estacao);
+      if(tipo.equals("PERENE")){  // Perene
+        newArvore = new Perene(idArvore, nome, idade, dificuldadeBase, _estacao);
         _arvores.add(newArvore);
       } else {  // Caduca
-        newArvore = new Caduca(idArvore, nome, dificuldadeBase, _estacao);
+        newArvore = new Caduca(idArvore, nome, idade, dificuldadeBase, _estacao);
         _arvores.add(newArvore);
       }
     } else {

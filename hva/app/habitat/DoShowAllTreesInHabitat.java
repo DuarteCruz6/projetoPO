@@ -35,7 +35,7 @@ class DoShowAllTreesInHabitat extends Command<Hotel> {
 
         //inicializa a String string e vai adicionando os elementos necessarios
         String string = "";
-        string+="ARVORE";
+        string+="ÁRVORE";
         string+="|";
         string+=arvore.getId();
         string+="|";

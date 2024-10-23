@@ -16,7 +16,7 @@ public abstract class Arvore implements Serializable, Comparable<Arvore>{
     private final String[] _cicloBiologico;
 
 
-    public Arvore(String id, String nome, int dificuldadeBase, String tipo, int estacaoNasceu, int[] esforcoSazunal, String[] cicloBiologico){
+    public Arvore(String id, String nome, int idade, int dificuldadeBase, String tipo, int estacaoNasceu, int[] esforcoSazunal, String[] cicloBiologico){
         //creating a tree
         _id=id;
         _nome=nome;
@@ -25,6 +25,7 @@ public abstract class Arvore implements Serializable, Comparable<Arvore>{
         _tipo=tipo;
         _esforcoSazonal=esforcoSazunal;
         _cicloBiologico=cicloBiologico;
+        _idade=idade;
     }
 
     double getEsforcoTotal(Estacao estacao){

@@ -46,7 +46,7 @@ class DoShowAllHabitats extends Command<Hotel> {
       for(Arvore arvore : _hotel.getArvoresHabitat(habitat)){
         //percorre todas as arvores pertencentes ao habitat
         //inicializa a String string e vai adicionando os elementos necessarios
-        string="ARVORE|";
+        string="ÁRVORE|";
         string+=arvore.getId();
         string+="|";
         string+=arvore.getNome();

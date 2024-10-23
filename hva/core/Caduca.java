@@ -5,8 +5,8 @@ package hva.core;
 
 public class Caduca extends Arvore{
 
-    public Caduca(String id, String nome, int dificuldadeBase, Estacao estacao){
+    public Caduca(String id, String nome, int idade, int dificuldadeBase, Estacao estacao){
         //creates the Caduca tree, which is a son of class Arvore
-        super(id, nome, dificuldadeBase, "Caduca",estacao.getEstacaoAtual(),new int[]{1,2,5,0},new String[]{"GERARFOLHAS","COMFOLHAS","LARGARFOLHAS","SEMFOLHAS"});
+        super(id, nome, idade, dificuldadeBase, "CADUCA",estacao.getEstacaoAtual(),new int[]{1,2,5,0},new String[]{"GERARFOLHAS","COMFOLHAS","LARGARFOLHAS","SEMFOLHAS"});
     }
 }
