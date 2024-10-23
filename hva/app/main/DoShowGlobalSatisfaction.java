@@ -2,6 +2,7 @@ package hva.app.main;
 
 import hva.core.Hotel;
 import hva.core.HotelManager;
+import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 
 /**
@@ -18,6 +19,8 @@ class DoShowGlobalSatisfaction extends Command<HotelManager> {
   @Override
   protected final void execute() {
     //mostra a satisfacao total, isto é, a dos animais e dos funcionarios
-    _hotel.getSatisfacaoTotal();
+    Display display = new Display();
+    display.addLine(Math.round(_hotel.getSatisfacaoTotal()));
+    display.display();
   }
 }
