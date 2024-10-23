@@ -980,6 +980,7 @@ public class Hotel implements Serializable {
       RegistoVacina newRegisto = new RegistoVacina(veterinarioDeuVacina, animalVacinado, vacinaDada);
       animalVacinado.addVacina(newRegisto);
       veterinarioDeuVacina.addVacinacao(newRegisto);
+      _registoVacinas.add(newRegisto);
       return newRegisto.getTermo();
     } catch (ClassCastException e) {
       throw new VeterinarioNaoExiste(idVeterinario);
@@ -1029,6 +1030,10 @@ public class Hotel implements Serializable {
    * @return A list of all vaccination records.
    */
   public ArrayList<RegistoVacina> getVacinasMas(){
+    return _registoVacinas;
+  }
+
+  public ArrayList<RegistoVacina> getRegistosVacinas(){
     return _registoVacinas;
   }
 }
