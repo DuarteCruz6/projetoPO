@@ -958,7 +958,7 @@ public class Hotel implements Serializable {
    * @throws AnimalNaoExiste If the animal does not exist.
    * @throws VeterinarioNaoExiste If the veterinarian does not exist.
    */
-  public void vacinarAnimal(String idVacina, String idVeterinario, String idAnimal) throws VeterinarioNaoAutorizado, FuncionarioNaoExiste, VacinaNaoExiste, AnimalNaoExiste, VeterinarioNaoExiste {
+  public String vacinarAnimal(String idVacina, String idVeterinario, String idAnimal) throws VeterinarioNaoAutorizado, FuncionarioNaoExiste, VacinaNaoExiste, AnimalNaoExiste, VeterinarioNaoExiste {
     try {
       Animal animalVacinado = getAnimal(idAnimal);
       Veterinario veterinarioDeuVacina = (Veterinario) getFuncionario(idVeterinario);
@@ -980,6 +980,7 @@ public class Hotel implements Serializable {
       RegistoVacina newRegisto = new RegistoVacina(veterinarioDeuVacina, animalVacinado, vacinaDada);
       animalVacinado.addVacina(newRegisto);
       veterinarioDeuVacina.addVacinacao(newRegisto);
+      return newRegisto.getTermo();
     } catch (ClassCastException e) {
       throw new VeterinarioNaoExiste(idVeterinario);
     }
