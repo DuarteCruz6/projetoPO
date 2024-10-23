@@ -18,10 +18,10 @@ class DoChangeHabitatInfluence extends Command<Hotel> {
   DoChangeHabitatInfluence(Hotel receiver) throws CommandException {
     super(Label.CHANGE_HABITAT_INFLUENCE, receiver);
     _hotel=receiver;
-    //guarda o valor do input recebido no prompt com a chave idEspecie
-    addStringField("idEspecie", hva.app.animal.Prompt.speciesKey());
     //guarda o valor do input recebido no prompt com a chave idHabitat
     addStringField("idHabitat", Prompt.habitatKey());
+    //guarda o valor do input recebido no prompt com a chave idEspecie
+    addStringField("idEspecie", hva.app.animal.Prompt.speciesKey());
     //guarda o valor do input recebido no prompt com a chave influenciaHabitat
     addStringField("influenciaHabitat", Prompt.habitatInfluence());
   }
