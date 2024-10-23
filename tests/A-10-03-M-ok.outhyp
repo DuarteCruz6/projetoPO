@@ -50,14 +50,17 @@ Escolha uma opção: Consultas
 3 - Actos médicos de um veterinário
 4 - Vacinações com problemas
 0 - Sair
-Escolha uma opção: Identificador único do habitat: ANIMAL| A1|Pinguim 1|C1|VOID|AR1
+Escolha uma opção: Identificador único do habitat: ANIMAL| A3|Macaco 1|C2|VOID|AR1
+ANIMAL| A4|Macaco 2|C2|VOID|AR1
+ANIMAL| A1|Pinguim 1|C1|VOID|AR1
 Consultas
 1 - Animais de um habitat
 2 - Actos médicos num animal
 3 - Actos médicos de um veterinário
 4 - Vacinações com problemas
 0 - Sair
-Escolha uma opção: Identificador único do habitat: Consultas
+Escolha uma opção: Identificador único do habitat: ANIMAL| A2|Pinguim 2|C1|VOID|AR2
+Consultas
 1 - Animais de um habitat
 2 - Actos médicos num animal
 3 - Actos médicos de um veterinário
