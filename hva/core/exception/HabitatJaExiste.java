@@ -11,9 +11,9 @@ public class HabitatJaExiste extends Exception {
   private static final long serialVersionUID = 202407081733L;
   
   /**
-   * @param IdHabitat id the user gave that already exists
+   * @param idHabitat id the user gave that already exists
    **/
-  public HabitatJaExiste(String IdHabitat) {
-    super("IdHabitat já existe: " + IdHabitat);
+  public HabitatJaExiste(String idHabitat) {
+    super("IdHabitat já existe: " + idHabitat);
   }
 }

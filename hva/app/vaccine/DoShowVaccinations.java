@@ -5,7 +5,6 @@ import hva.app.exception.UnknownVeterinarianKeyException;
 import hva.core.Funcionario;
 import hva.core.Hotel;
 import hva.core.RegistoVacina;
-import hva.core.Veterinario;
 import hva.core.exception.FuncionarioNaoExiste;
 import hva.core.exception.VeterinarioNaoExiste;
 import pt.tecnico.uilib.Display;
@@ -28,7 +27,7 @@ class DoShowVaccinations extends Command<Hotel> {
     for(Funcionario funcionario : _hotel.getFuncionarios()){
       //percorre todos os funcionarios do hotel
 
-      if(funcionario instanceof Veterinario){
+      if(funcionario.getTipo().equals("VET")){
         //se o funcionario for um veterinario
         String idVeterinario = funcionario.getId();
         try {

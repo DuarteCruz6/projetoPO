@@ -11,9 +11,9 @@ public class ArvoreJaExiste extends Exception {
   private static final long serialVersionUID = 202407081733L;
   
   /**
-   * @param IdArvore id the user gave that already exists
+   * @param idArvore id the user gave that already exists
    **/
-  public ArvoreJaExiste(String IdArvore) {
-    super("IdArvore já existe: " + IdArvore);
+  public ArvoreJaExiste(String idArvore) {
+    super("IdArvore já existe: " + idArvore);
   }
 }

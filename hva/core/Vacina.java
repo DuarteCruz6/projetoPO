@@ -9,14 +9,14 @@ public class Vacina implements Serializable, Comparable <Vacina>{
     private final String _nome;
     private int _numAdministracoes;
     private final String[] _termosVacinacao = {"CONFUSÃO","ACIDENTE","ERRO"}; 
-    private final ArrayList <Especie> _especieQuePodemLevar;
+    private final SortedSet <Especie> _especieQuePodemLevar;
 
     public Vacina(String id, String nome){
         //creating a vaccine
         _id=id;
         _nome=nome;
         _numAdministracoes=0;
-        _especieQuePodemLevar= new ArrayList<>();
+        _especieQuePodemLevar= new TreeSet<>();
     }
 
     public String getId(){
@@ -67,7 +67,7 @@ public class Vacina implements Serializable, Comparable <Vacina>{
         return _termosVacinacao[indexTermo];
     }
 
-    public ArrayList <Especie> getEspeciesSupostas(){
+    public SortedSet <Especie> getEspeciesSupostas(){
         return _especieQuePodemLevar;
     }
 
@@ -81,4 +81,5 @@ public class Vacina implements Serializable, Comparable <Vacina>{
         //returns the correct lexicographic order when listing vaccines
         return _id.toLowerCase().compareTo(outraVacina.getId().toLowerCase());
     }
+
 }

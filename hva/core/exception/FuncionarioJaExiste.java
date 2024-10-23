@@ -11,9 +11,9 @@ public class FuncionarioJaExiste extends Exception {
   private static final long serialVersionUID = 202407081733L;
   
   /**
-   * @param IdFuncionario id the user gave that already exists
+   * @param idFuncionario id the user gave that already exists
    **/
-  public FuncionarioJaExiste(String IdFuncionario) {
-    super("IdFuncionario já existe: " + IdFuncionario);
+  public FuncionarioJaExiste(String idFuncionario) {
+    super("IdFuncionario já existe: " + idFuncionario);
   }
 }

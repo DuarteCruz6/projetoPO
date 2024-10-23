@@ -1,0 +1,34 @@
+*** tests/A-10-03-M-ok.out	Fri Oct 18 19:27:35 2024
+--- tests/A-10-03-M-ok.outhyp	Sun Oct 20 21:33:15 2024
+***************
+*** 51,66 ****
+  4 - Vacinações com problemas
+  0 - Sair
+  Escolha uma opção: Identificador único do habitat: ANIMAL|A1|Pinguim 1|C1|VOID|AR1
+- ANIMAL|A3|Macaco 1|C2|VOID|AR1
+- ANIMAL|A4|Macaco 2|C2|VOID|AR1
+  Consultas
+  1 - Animais de um habitat
+  2 - Actos médicos num animal
+  3 - Actos médicos de um veterinário
+  4 - Vacinações com problemas
+  0 - Sair
+! Escolha uma opção: Identificador único do habitat: ANIMAL|A2|Pinguim 2|C1|VOID|AR2
+! Consultas
+  1 - Animais de um habitat
+  2 - Actos médicos num animal
+  3 - Actos médicos de um veterinário
+--- 51,63 ----
+  4 - Vacinações com problemas
+  0 - Sair
+  Escolha uma opção: Identificador único do habitat: ANIMAL| A1|Pinguim 1|C1|VOID|AR1
+  Consultas
+  1 - Animais de um habitat
+  2 - Actos médicos num animal
+  3 - Actos médicos de um veterinário
+  4 - Vacinações com problemas
+  0 - Sair
+! Escolha uma opção: Identificador único do habitat: Consultas
+  1 - Animais de um habitat
+  2 - Actos médicos num animal
+  3 - Actos médicos de um veterinário

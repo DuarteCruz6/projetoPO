@@ -11,9 +11,9 @@ public class ArvoreNaoExiste extends Exception {
   private static final long serialVersionUID = 202407081733L;
   
   /**
-   * @param IdArvore id the user gave that doesn't exist
+   * @param idArvore id the user gave that doesn't exist
    **/
-  public ArvoreNaoExiste(String IdArvore) {
-    super("IdArvore não existe: " + IdArvore);
+  public ArvoreNaoExiste(String idArvore) {
+    super("IdArvore não existe: " + idArvore);
   }
 }

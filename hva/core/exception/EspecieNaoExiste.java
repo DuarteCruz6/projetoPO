@@ -11,9 +11,9 @@ public class EspecieNaoExiste extends Exception {
   private static final long serialVersionUID = 202407081733L;
   
   /**
-   * @param IdEspecie id the user gave that doesn't exist
+   * @param idEspecie id the user gave that doesn't exist
    **/
-  public EspecieNaoExiste(String IdEspecie) {
-    super("IdEspecie não existe: " + IdEspecie);
+  public EspecieNaoExiste(String idEspecie) {
+    super("IdEspecie não existe: " + idEspecie);
   }
 }

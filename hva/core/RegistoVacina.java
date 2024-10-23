@@ -25,7 +25,7 @@ public class RegistoVacina implements Serializable{
         //gets the animal's specie
         Especie especieQueLevou = _animal.getEspecie();
         //gets the species that can take the vaccine
-        ArrayList <Especie> especieQuePodemLevar = _vacina.getEspeciesSupostas();
+        SortedSet <Especie> especieQuePodemLevar = _vacina.getEspeciesSupostas();
 
         for(Especie especieAtual : especieQuePodemLevar){
             //loops through the species that can take the vaccine and checks if the animal's specie corresponds to any of them

@@ -32,7 +32,8 @@ class DoShowAllEmployees extends Command<Hotel> {
       string+="|";
       string+=funcionario.getNome();
       string+="|";
-      if(funcionario instanceof Veterinario veterinario){     //Cast para Veterinario caso seja veterinario
+      if(funcionario.getTipo().equals("VET")){     //Cast para Veterinario caso seja veterinario
+        Veterinario veterinario = (Veterinario) funcionario;
         for(String id : veterinario.getIdEspeciesTratadas()){
           //percorre todas as especies que o veterinario trata
           string+=id;

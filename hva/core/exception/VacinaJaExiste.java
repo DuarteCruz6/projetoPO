@@ -11,9 +11,9 @@ public class VacinaJaExiste extends Exception {
   private static final long serialVersionUID = 202407081733L;
   
   /**
-   * @param IdVacina id the user gave that already exists
+   * @param idVacina id the user gave that already exists
    **/
-  public VacinaJaExiste(String IdVacina) {
-    super("IdVacina já existe: " + IdVacina);
+  public VacinaJaExiste(String idVacina) {
+    super("IdVacina já existe: " + idVacina);
   }
 }

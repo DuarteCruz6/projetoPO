@@ -11,9 +11,9 @@ public class VeterinarioNaoExiste extends Exception {
   private static final long serialVersionUID = 202407081733L;
   
   /**
-   * @param IdVeterinario id the user gave that doesn't exist
+   * @param idVeterinario id the user gave that doesn't exist
    **/
-  public VeterinarioNaoExiste(String IdVeterinario) {
-    super("IdVeterinario não existe: " + IdVeterinario);
+  public VeterinarioNaoExiste(String idVeterinario) {
+    super("IdVeterinario não existe: " + idVeterinario);
   }
 }

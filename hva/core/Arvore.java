@@ -12,14 +12,19 @@ public abstract class Arvore implements Serializable, Comparable<Arvore>{
     private final int _estacaoNasceu;
     private final int _dificuldadeBase;
     private final String _tipo;
+    private final int[] _esforcoSazonal;
+    private final String[] _cicloBiologico;
 
-    public Arvore(String id, String nome, int dificuldadeBase, String tipo, int estacaoNasceu){
+
+    public Arvore(String id, String nome, int dificuldadeBase, String tipo, int estacaoNasceu, int[] esforcoSazunal, String[] cicloBiologico){
         //creating a tree
         _id=id;
         _nome=nome;
         _estacaoNasceu=estacaoNasceu;
         _dificuldadeBase=dificuldadeBase;
         _tipo=tipo;
+        _esforcoSazonal=esforcoSazunal;
+        _cicloBiologico=cicloBiologico;
     }
 
     double getEsforcoTotal(Estacao estacao){
@@ -66,11 +71,15 @@ public abstract class Arvore implements Serializable, Comparable<Arvore>{
         return _dificuldadeBase;
     }
 
-    //for inheritance
-    public abstract int getEsforcoSazonal(Estacao estacao);
+    public int getEsforcoSazonal(Estacao estacao){
+        int estacaoAtual=estacao.getEstacaoAtual();
+        return _esforcoSazonal[estacaoAtual];
+    };
 
-    //for inheritance
-    public abstract String getCicloBiologico(Estacao estacao);
+    public String getCicloBiologico(Estacao estacao){
+        int estacaoAtual=estacao.getEstacaoAtual();
+        return _cicloBiologico[estacaoAtual];
+    };
 
     @Override
     public int compareTo(Arvore outraArvore){

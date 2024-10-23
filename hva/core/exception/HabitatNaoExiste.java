@@ -11,9 +11,9 @@ public class HabitatNaoExiste extends Exception {
   private static final long serialVersionUID = 202407081733L;
   
   /**
-   * @param IdHabitat id the user gave that doesn't exist
+   * @param idHabitat id the user gave that doesn't exist
    **/
-  public HabitatNaoExiste(String IdHabitat) {
-    super("IdHabitat não existe: " + IdHabitat);
+  public HabitatNaoExiste(String idHabitat) {
+    super("IdHabitat não existe: " + idHabitat);
   }
 }
