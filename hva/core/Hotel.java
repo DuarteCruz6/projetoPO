@@ -959,30 +959,30 @@ public class Hotel implements Serializable {
    * @throws VeterinarioNaoExiste If the veterinarian does not exist.
    */
   public void vacinarAnimal(String idVacina, String idVeterinario, String idAnimal) throws VeterinarioNaoAutorizado, FuncionarioNaoExiste, VacinaNaoExiste, AnimalNaoExiste, VeterinarioNaoExiste {
-    Animal animalVacinado = getAnimal(idAnimal);
-    Veterinario veterinarioDeuVacina = (Veterinario) getFuncionario(idVeterinario);
-    Vacina vacinaDada = getVacina(idVacina);
-    if(veterinarioDeuVacina == null){
+    try {
+      Animal animalVacinado = getAnimal(idAnimal);
+      Veterinario veterinarioDeuVacina = (Veterinario) getFuncionario(idVeterinario);
+      Vacina vacinaDada = getVacina(idVacina);
+      boolean naoPodeDarVacina = true;
+      for(Especie especie : veterinarioDeuVacina.getEspeciesPode()){
+        if(especie.equals(animalVacinado.getEspecie())){
+          naoPodeDarVacina = false;
+          break;
+        }
+      }
+      if(naoPodeDarVacina){
+        throw new VeterinarioNaoAutorizado(idVeterinario, animalVacinado.getEspecie().getId());
+      }
+      vacinaDada.addVacinaContagem();
+      if(!_alteracoes){
+        changeAlteracoes();
+      }
+      RegistoVacina newRegisto = new RegistoVacina(veterinarioDeuVacina, animalVacinado, vacinaDada);
+      animalVacinado.addVacina(newRegisto);
+      veterinarioDeuVacina.addVacinacao(newRegisto);
+    } catch (ClassCastException e) {
       throw new VeterinarioNaoExiste(idVeterinario);
     }
-
-    boolean naoPodeDarVacina = true;
-    for(Especie especie : veterinarioDeuVacina.getEspeciesPode()){
-      if(especie.equals(animalVacinado.getEspecie())){
-        naoPodeDarVacina = false;
-        break;
-      }
-    }
-    if(naoPodeDarVacina){
-      throw new VeterinarioNaoAutorizado(idVeterinario, animalVacinado.getEspecie().getId());
-    }
-    vacinaDada.addVacinaContagem();
-    if(!_alteracoes){
-      changeAlteracoes();
-    }
-    RegistoVacina newRegisto = new RegistoVacina(veterinarioDeuVacina, animalVacinado, vacinaDada);
-    animalVacinado.addVacina(newRegisto);
-    veterinarioDeuVacina.addVacinacao(newRegisto);
   }
 
   /**
