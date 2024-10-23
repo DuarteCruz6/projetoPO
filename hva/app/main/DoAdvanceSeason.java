@@ -8,17 +8,17 @@ import pt.tecnico.uilib.menus.Command;
  * Command for advancing the season of the system.
  **/
 class DoAdvanceSeason extends Command<HotelManager> {
-  private final Hotel _hotel;
+  private final HotelManager _hotelManager;
 
   DoAdvanceSeason(HotelManager receiver) {
     super(Label.ADVANCE_SEASON, receiver);
-    _hotel= receiver.getHotel();
+    _hotelManager = receiver;
   }
 
   @Override
   protected final void execute() {
     //avança a estacao do ano
-    int estacaoAtual = _hotel.avancarEstacao();
+    int estacaoAtual = _hotelManager.getHotel().avancarEstacao();
     Display display = new Display();
     display.addLine(estacaoAtual);
     display.display();

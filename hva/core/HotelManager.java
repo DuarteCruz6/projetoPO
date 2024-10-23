@@ -88,7 +88,9 @@ public class HotelManager{
     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
       //tries to open the file and get its values
       //saves the file's Hotel in _hotel
+
       _hotel = (Hotel)ois.readObject();
+
       //checks if there were variable _alteracoes in this new Hotel, because we just saved this Hotel's changes
       if(houveAlteracoes()){
         //changes the _alteracoes boolean on hotel, because we saved the changes that were made

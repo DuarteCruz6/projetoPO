@@ -144,6 +144,10 @@ public class Hotel implements Serializable {
     return _estacao;
   }
 
+  public int getEstacaoAtual() {
+    return _estacao.getEstacaoAtual();
+  }
+
   /**
    * Adds a new species ID to the list and marks the system as altered if necessary.
    * 
