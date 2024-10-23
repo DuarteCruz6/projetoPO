@@ -19,7 +19,7 @@ class DoChangeHabitatArea extends Command<Hotel> {
     //guarda o valor do input recebido no prompt com a chave idHabitat
     addStringField("idHabitat", Prompt.habitatKey());
     //guarda o valor do input recebido no prompt com a chave novaArea
-    addIntegerField("novaArea", Prompt.treeAge());
+    addIntegerField("novaArea", Prompt.habitatArea());
   }
   
   @Override
