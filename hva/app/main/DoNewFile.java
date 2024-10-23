@@ -1,5 +1,6 @@
 package hva.app.main;
 
+import hva.app.exception.FileOpenFailedException;
 import hva.core.*;
 import hva.core.exception.MissingFileAssociationException;
 import hva.core.exception.UnavailableFileException;
@@ -8,7 +9,6 @@ import java.io.IOException;
 import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
-//FIXME add more imports if needed
 
 /**
  * Command for creating a new zoo hotel.
@@ -38,11 +38,11 @@ class DoNewFile extends Command<HotelManager> {
               //entao pedimos o nome do novo ficheiro no qual vamos guardar as informacoes
               String filename = Form.requestString(Prompt.newSaveAs());
               _hotelManager.saveAs(filename);
-            } catch (FileNotFoundException | MissingFileAssociationException | UnavailableFileException e1) {
-              // nunca vai acontecer
-            } catch ( IOException e1) {
+            } catch (MissingFileAssociationException | UnavailableFileException | IOException e1) {
+              throw new FileOpenFailedException(e1);
             }
           } catch ( IOException e) {
+            throw new FileOpenFailedException(e);
           }      
         }
     }

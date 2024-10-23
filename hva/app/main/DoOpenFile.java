@@ -40,10 +40,11 @@ class DoOpenFile extends Command<HotelManager> {
             try {
               //da save no ficheiro criado com o nome que o user deu
               _hotelManager.saveAs(filename);
-            } catch (FileNotFoundException | MissingFileAssociationException | UnavailableFileException e1) {
-            }catch (IOException e1) {
+            } catch (MissingFileAssociationException | UnavailableFileException | IOException e1) {
+              throw new FileOpenFailedException(e1);
             }  
           } catch (IOException e) {
+            throw new FileOpenFailedException(e);
           }      
         }
       }

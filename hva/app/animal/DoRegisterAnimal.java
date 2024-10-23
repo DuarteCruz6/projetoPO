@@ -75,6 +75,7 @@ class DoRegisterAnimal extends Command<Hotel> {
 
     } catch (EspecieNaoExiste e) {
       //nunca acontece
+      throw new UnknownSpeciesKeyException(idEspecie);
 
     } catch (HabitatNaoExiste e) {
       //nao existe habitat com este id

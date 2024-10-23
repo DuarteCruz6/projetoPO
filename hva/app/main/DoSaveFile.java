@@ -1,5 +1,6 @@
 package hva.app.main;
 
+import hva.app.exception.FileOpenFailedException;
 import hva.core.HotelManager;
 import hva.core.exception.MissingFileAssociationException;
 import hva.core.exception.UnavailableFileException;
@@ -32,7 +33,7 @@ class DoSaveFile extends Command<HotelManager> {
         String filename = Form.requestString(Prompt.newSaveAs());
         _hotelManager.saveAs(filename);
       } catch (MissingFileAssociationException| UnavailableFileException | IOException ex) {
-        //nunca vai acontecer
+        throw new FileOpenFailedException(ex);
       }
     } 
   }
