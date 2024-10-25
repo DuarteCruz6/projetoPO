@@ -10,23 +10,25 @@ import java.io.Serializable;
 // Inverno:3
 
 public class Estacao implements Serializable{
-    private int _estacaoAtual;
+    private EstacaoEnumerator _estacaoAtual;
 
     public Estacao(){
         //initiates a new year
-        _estacaoAtual=0;
+        _estacaoAtual=EstacaoEnumerator.PRIMAVERA;
     }
 
     int getEstacaoAtual(){
         //returns the present season
-        return _estacaoAtual;
+        return _estacaoAtual.getValor();
     }
 
     void skipEstacao(){
         //skips the present season
-        _estacaoAtual++;
-        if(_estacaoAtual==4){
-            _estacaoAtual=0;
+        switch (_estacaoAtual) {
+            case PRIMAVERA -> _estacaoAtual = EstacaoEnumerator.VERAO;
+            case VERAO -> _estacaoAtual = EstacaoEnumerator.OUTONO;
+            case OUTONO -> _estacaoAtual = EstacaoEnumerator.INVERNO;
+            case INVERNO -> _estacaoAtual = EstacaoEnumerator.PRIMAVERA;
         }
     }
 }

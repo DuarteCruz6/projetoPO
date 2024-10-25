@@ -6,7 +6,6 @@ import hva.core.exception.MissingFileAssociationException;
 import hva.core.exception.UnavailableFileException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
@@ -24,7 +23,6 @@ class DoNewFile extends Command<HotelManager> {
 
   @Override
   protected final void execute() throws CommandException {
-    Display display = new Display();
     if(_hotelManager.houveAlteracoes()){
       //se der true é porque houve alterações no hotel, então temos de perguntar ao user 
       //se quer guardar antes de sair                           
@@ -43,14 +41,13 @@ class DoNewFile extends Command<HotelManager> {
             } catch (MissingFileAssociationException | UnavailableFileException | FileNotFoundException e1) {
               throw new FileOpenFailedException(e1);
             } catch (IOException e1) {
-              display.addLine(e1.getMessage());
+              e1.printStackTrace();
             }
           } catch ( IOException e) {
-            display.addLine(e.getMessage());
+            e.printStackTrace();
           }      
         }
     }
-    display.display();
     _hotelManager.novoHotel();
   }
 }
