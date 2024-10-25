@@ -73,22 +73,27 @@ public abstract class Arvore implements Serializable, Comparable<Arvore>{
     }
 
     public void setEsforcoSazonal(int esforcoSazonalAtual){
+        //sets the seasonal effort according to the present season
         _esforcoSazonalAtual=esforcoSazonalAtual;
     }
 
     public int getEsforcoSazonal(Estacao estacao){
+        //returns the seasonal effort according to the present season
         return _esforcoSazonalAtual;
     };
 
     public void setCicloBiologico(String cicloBiologicoAtual){
+        //sets the biological cycle according to the present season
         _cicloBiologicoAtual = cicloBiologicoAtual;
     };
 
     public String getCicloBiologico(Estacao estacao){
+        //returns the biological cycle according to the present season
         return _cicloBiologicoAtual;
     };
 
     private EstadoArvore getEstadoPorEstacao(Estacao estacao) {
+        //returns the seasonal effort and biological cycle according to the present season
         switch (estacao.getEstacaoAtual()) {
             case 0 -> {
                 return new Primavera();
@@ -104,8 +109,9 @@ public abstract class Arvore implements Serializable, Comparable<Arvore>{
     }
 
     public final void atualizarEstado(Estacao estacao) {
+        //updates the seasonal effort and biological cycle according to the present season
         _estado = getEstadoPorEstacao(estacao);
-        _estado.atualizarEstado(this); // Chama o método do estado atual
+        _estado.atualizarEstado(this); 
     }
 
     @Override

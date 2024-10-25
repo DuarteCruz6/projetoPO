@@ -344,7 +344,11 @@ public class Hotel implements Serializable {
     }
     _estacao.skipEstacao();
     for (Arvore arvore : _arvores) {
+        //goes through all trees
+        
+        //checks if we need to update a tree's age
         arvore.checkAumentarIdade(_estacao);
+        //updates a tree's seasonal effort and biological cycle
         arvore.atualizarEstado(_estacao);
     }
     return _estacao.getEstacaoAtual();
