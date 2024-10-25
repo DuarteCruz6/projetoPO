@@ -12,7 +12,7 @@ public class Veterinario extends Funcionario{
 
     public Veterinario(String id, String nome){
         //creating the Veterinario employee, which is a son of class Funcionario
-        super(id,nome,"VET");
+        super(id,nome,"VET", new VetStrategy());
         _especiesPode= new ArrayList<>();
         _vacinasFeitas= new ArrayList<>();
     }
@@ -30,24 +30,9 @@ public class Veterinario extends Funcionario{
     @Override
     double getSatisfacao(Estacao estacao){
         //returns the vet's satisfaction
-        return calcularSatisfacao();
-    }
-
-    private double calcularSatisfacao(){
-        //calculates the vet's satisfaction
-        //satisfaction = 20 - (the sum of (number of animal for each specie they treat)/(number of vets that treat each specie they treat) 
-        //                     for all species the vet treats)
-        
-        double satisfacao=20;
-        for(Especie especie : _especiesPode){
-            //loops through each specie the vet has
-
-            //substracts ((number of animal the specie has)/(number of vets that treat the specie))
-            satisfacao-= especie.getNumAnimais()/especie.getnumVeterinariosSabemVacinar();
-        }
-
-        //returns the satisfaction
-        return satisfacao;
+        ParametrosSatisfacao parametros = new ParametrosSatisfacao();
+        parametros.setEspecies(_especiesPode);
+        return super._strategy.execute(parametros);
     }
 
     public ArrayList <String> getIdEspeciesTratadas(){

@@ -9,12 +9,14 @@ public abstract  class Funcionario implements Serializable, Comparable<Funcionar
     private final String _id;
     private final String _nome;
     private final String _tipo;
+    protected final Strategy _strategy;
 
-    public Funcionario(String id, String nome, String tipo){
+    public Funcionario(String id, String nome, String tipo, Strategy strategy){
         //creating an employee
         _id=id;
         _nome=nome;
         _tipo=tipo;
+        _strategy=strategy;
     }
 
     //for inheritance

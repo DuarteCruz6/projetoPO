@@ -10,7 +10,7 @@ public class Tratador extends Funcionario{
 
     public Tratador(String id, String nome){
         //creating the Tratador employee, which is a son of class Funcionario
-        super(id,nome,"TRT");
+        super(id,nome,"TRT", new TratadorStrategy());
         _habitats= new ArrayList<>();
     }
 
@@ -27,30 +27,10 @@ public class Tratador extends Funcionario{
     @Override
     double getSatisfacao(Estacao estacao){
         //returns the treater's satisfaction
-        return calcularSatisfacao(estacao);
-    }
-
-    private double calcularSatisfacao(Estacao estacao){
-        //calculates the treater's satisfaction
-        //satisfaction = 300 - (the sum of (work on each habitat they treat)/(number of treaters that treat the habitat) 
-        //                      for all habitats the tratador treats)
-        
-        double satisfacao=300;
-        for(Habitat habitat: _habitats){
-            //loops through each habitat the treater has
-
-            //gets the work on the habitat
-            int trabalhoHabitat= getTrabalhoHabitat(habitat, estacao);
-
-            //gets the number of treaters of the habitat
-            int trabalhadoresHabitat = habitat.getNumTratadores();
-
-            //subtracts (work on the habitat)/(number of treaters that treat the habitat
-            satisfacao -= trabalhoHabitat/trabalhadoresHabitat;
-        }
-
-        //returns the satisfaction
-        return satisfacao;
+        ParametrosSatisfacao parametros = new ParametrosSatisfacao();
+        parametros.setEstacao(estacao);
+        parametros.setHabitats(_habitats);
+        return super._strategy.execute(parametros);
     }
 
     public ArrayList <String> getIdHabitats(){
@@ -65,25 +45,5 @@ public class Tratador extends Funcionario{
             idHabitatsTratados.add(idHabitat);
         }
         return idHabitatsTratados;
-    }
-
-    private int getTrabalhoHabitat(Habitat habitat, Estacao estacao){
-        //returns the work on the habitat
-        //work on the habitat = area of the habitat + 3*(number of animals of the habitat) + 
-        //                      (the sum of the effort to clean every tree on the habitat)
-
-        //gets the habitat's area
-        int area = habitat.getArea();
-        //gets the number of animal on the habitat
-        int populacao = habitat.getNumAnimais();
-        //sum of the effort to clean every tree on the habitat
-        int esforcoLimpeza = 0;
-
-        for(Arvore arvore : habitat.getArvores()){
-            //loops through each tree on the habitat and gets the total effort to clean them and adds to the sum
-            esforcoLimpeza+= arvore.getEsforcoTotal(estacao);
-        }
-
-        return area + 3*populacao + esforcoLimpeza;
     }
 }
