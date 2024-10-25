@@ -5,6 +5,7 @@ import hva.core.HotelManager;
 import hva.core.exception.MissingFileAssociationException;
 import hva.core.exception.UnavailableFileException;
 import java.io.IOException;
+import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
@@ -22,6 +23,7 @@ class DoSaveFile extends Command<HotelManager> {
 
   @Override
   protected final void execute() throws CommandException {
+    Display display = new Display();
     try {
       //da save no ficheiro atual
       _hotelManager.save();
@@ -32,10 +34,13 @@ class DoSaveFile extends Command<HotelManager> {
         //no qual vamos guardar as informacoes
         String filename = Form.requestString(Prompt.newSaveAs());
         _hotelManager.saveAs(filename);
-      } catch (MissingFileAssociationException| UnavailableFileException | IOException ex) {
+      } catch (MissingFileAssociationException| UnavailableFileException  ex) {
         throw new FileOpenFailedException(ex);
+      } catch (IOException e1) {
+        display.addLine(e1.getMessage());
       }
     } 
+    display.display();
   }
 
 }
