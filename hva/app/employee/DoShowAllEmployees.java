@@ -4,7 +4,6 @@ import hva.core.Funcionario;
 import hva.core.Hotel;
 import hva.core.Tratador;
 import hva.core.Veterinario;
-import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 
 /**
@@ -20,7 +19,6 @@ class DoShowAllEmployees extends Command<Hotel> {
   
   @Override
   protected void execute(){
-  Display display = new Display();
     for(Funcionario funcionario : _hotel.getFuncionarios()){
       //percorre todos os funcionarios do hotel
 
@@ -48,8 +46,8 @@ class DoShowAllEmployees extends Command<Hotel> {
         }
       }
       //da print à string, exceto o ultimo caracter, pois adiciona sempre um a mais (ou virgula ou um |)
-      display.addLine(string.substring(0,string.length()-1));
+      _display.addLine(string.substring(0,string.length()-1));
     }
-  display.display();
+  _display.display();
   }
 }

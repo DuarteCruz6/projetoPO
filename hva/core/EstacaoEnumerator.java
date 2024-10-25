@@ -1,6 +1,6 @@
 package hva.core;
 
-public enum EstacaoEnumerator {
+public enum EstacaoEnumerator{
     PRIMAVERA(0),
     VERAO(1),
     OUTONO(2),

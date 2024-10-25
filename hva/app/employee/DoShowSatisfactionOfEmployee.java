@@ -3,7 +3,6 @@ package hva.app.employee;
 import hva.app.exception.UnknownEmployeeKeyException;
 import hva.core.Hotel;
 import hva.core.exception.FuncionarioNaoExiste;
-import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 
@@ -22,17 +21,16 @@ class DoShowSatisfactionOfEmployee extends Command<Hotel> {
   
   @Override
   protected void execute() throws CommandException {
-      Display display = new Display();
       //carrega o valor do input recebido no prompt com a chave idFuncionario para a variavel idFuncionario
       String idFuncionario = stringField("idFuncionario");
       try {
         //imprime o valor da satisfacao do funcionario com id idFuncionario
-        display.addLine(_hotel.getSatisfacaoFuncionario(idFuncionario));
+        _display.addLine(_hotel.getSatisfacaoFuncionario(idFuncionario));
 
       } catch (FuncionarioNaoExiste e) {
         //nao ha funcionario com este id
         throw new UnknownEmployeeKeyException(idFuncionario);
       }
-      display.display();
+      _display.display();
   }
 }

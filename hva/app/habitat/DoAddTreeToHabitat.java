@@ -4,7 +4,6 @@ import hva.app.exception.*;
 import hva.core.Arvore;
 import hva.core.Hotel;
 import hva.core.exception.*;
-import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
@@ -68,7 +67,6 @@ class DoAddTreeToHabitat extends Command<Hotel> {
       //dificuldade base de limpeza dificuldadeArvore e tipo tipoArvore, 
       //e planta no habitat de id idHabitat
       Arvore arvore = _hotel.plantarArvoreNaoExistente(idHabitat, idArvore, nomeArvore,idadeArvore, dificuldadeArvore,tipoArvore);
-      Display display = new Display();
       String string="ÁRVORE|";
       string+=arvore.getId();
       string+="|";
@@ -82,8 +80,8 @@ class DoAddTreeToHabitat extends Command<Hotel> {
       string+="|";
       string+=arvore.getCicloBiologico(_hotel.getEstacao());
       //da print à string com as informacoes da arvore
-      display.addLine(string);
-      display.display();
+      _display.addLine(string);
+      _display.display();
     
     } catch (HabitatNaoExiste e) {
       //nao ha habitat com este id

@@ -4,7 +4,6 @@ import hva.core.Arvore;
 import hva.core.Habitat;
 import hva.core.Hotel;
 import java.util.*;
-import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 
 
@@ -23,9 +22,6 @@ class DoShowAllHabitats extends Command<Hotel> {
   protected void execute() {
     //guarda todos os habitats do hotel em allHabitats
     SortedSet <Habitat> allHabitats = _hotel.getAllHabitats();
-
-    Display display = new Display();
-
     for(Habitat habitat : allHabitats){
       //percorre todos os habitats do hotel
 
@@ -41,7 +37,7 @@ class DoShowAllHabitats extends Command<Hotel> {
       string+="|";
       string+=habitat.getNumArvores();
       //da print à string com as informacoes do habitat
-      display.addLine(string);
+      _display.addLine(string);
 
       for(Arvore arvore : _hotel.getArvoresHabitat(habitat)){
         //percorre todas as arvores pertencentes ao habitat
@@ -59,10 +55,10 @@ class DoShowAllHabitats extends Command<Hotel> {
         string+="|";
         string+=arvore.getCicloBiologico(_hotel.getEstacao());
         //da print à string com as informacoes da arvore
-        display.addLine(string);
+        _display.addLine(string);
       }
 
     }
-    display.display();
+    _display.display();
   }
 }

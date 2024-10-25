@@ -4,7 +4,6 @@ import hva.app.exception.UnknownAnimalKeyException;
 import hva.core.Hotel;
 import hva.core.RegistoVacina;
 import hva.core.exception.AnimalNaoExiste;
-import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 
@@ -23,7 +22,6 @@ class DoShowMedicalActsOnAnimal extends Command<Hotel> {
 
   @Override
   protected void execute() throws CommandException {
-      Display display = new Display();
       //carrega o valor do input recebido no prompt com a chave idAnimal para a variavel idAnimal
       String idAnimal = stringField("idAnimal");
       try {
@@ -40,12 +38,12 @@ class DoShowMedicalActsOnAnimal extends Command<Hotel> {
           string+="|";
           string+=registo.getAnimal().getEspecie().getId();
           //da print à string
-          display.addLine(string);
+          _display.addLine(string);
         }
       } catch (AnimalNaoExiste e) {
         //nao ha animal com este id
         throw new UnknownAnimalKeyException(idAnimal);
       }
-      display.display();
+      _display.display();
   }
 }

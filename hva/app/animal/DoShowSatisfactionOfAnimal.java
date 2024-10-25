@@ -3,7 +3,6 @@ package hva.app.animal;
 import hva.app.exception.UnknownAnimalKeyException;
 import hva.core.Hotel;
 import hva.core.exception.AnimalNaoExiste;
-import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 
@@ -22,17 +21,16 @@ class DoShowSatisfactionOfAnimal extends Command<Hotel> {
   
   @Override
   protected final void execute() throws CommandException {
-      Display display = new Display();
       //carrega o valor do input recebido no prompt com a chave idAnimal para a variavel idAnimal
       String idAnimal = stringField("idAnimal");
       try {
         //imprime o valor da satisfacao do animal com id idAnimal
-        display.addLine(_hotel.getSatisfacaoAnimal(idAnimal));
+        _display.addLine(_hotel.getSatisfacaoAnimal(idAnimal));
 
       } catch (AnimalNaoExiste e) {
         //nao ha animal com este id
         throw new UnknownAnimalKeyException(idAnimal);
       }
-      display.display();
+      _display.display();
   }
 }

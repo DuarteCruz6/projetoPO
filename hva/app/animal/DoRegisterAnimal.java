@@ -4,7 +4,6 @@ import hva.app.exception.*;
 import hva.app.habitat.Prompt;
 import hva.core.Hotel;
 import hva.core.exception.*;
-import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
@@ -31,7 +30,6 @@ class DoRegisterAnimal extends Command<Hotel> {
   
   @Override
   protected final void execute() throws CommandException, DuplicateAnimalKeyException {
-      Display display = new Display();
       //carrega o valor do input recebido no prompt com a chave idAnimal para a variavel idAnimal
       String idAnimal=stringField("idAnimal");
 
@@ -81,6 +79,5 @@ class DoRegisterAnimal extends Command<Hotel> {
       //nao existe habitat com este id
       throw new UnknownHabitatKeyException(idHabitat);
     } 
-      display.display();
   }
 }

@@ -1,5 +1,7 @@
 package hva.core;
 
+import java.io.Serializable;
+
 /**
  * Interface representing the state of a tree.
  * 
@@ -7,6 +9,6 @@ package hva.core;
  * based on seasonal changes.
  */
 
-public interface EstadoArvore {
+public interface EstadoArvore extends Serializable{
     void atualizarEstado(Arvore arvore);
 }

@@ -2,7 +2,7 @@ package hva.core;
 
 import java.util.ArrayList;
 
-public class VetStrategy implements Strategy {
+public class VetStrategy implements Strategy{
     @Override
     public double execute(ParametrosSatisfacao parametros){
         //calculates the vet's satisfaction

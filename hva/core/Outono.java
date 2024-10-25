@@ -1,6 +1,6 @@
 package hva.core;
 
-public class Outono implements EstadoArvore {
+public class Outono implements EstadoArvore{
     @Override
     public void atualizarEstado(Arvore arvore) {
         //updates the tree's biological cycle and seasonal effort to the Autumn terms according to the type of tree

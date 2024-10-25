@@ -3,7 +3,6 @@ package hva.app.vaccine;
 import hva.app.exception.*;
 import hva.core.Hotel;
 import hva.core.exception.*;
-import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 
@@ -41,9 +40,8 @@ class DoVaccinateAnimal extends Command<Hotel> {
      //o veterinario de id idVeterinario vacina o animal de id idAnimal com a vacina de id idVacina
       String termo = _hotel.vacinarAnimal(idVacina, idVeterinario, idAnimal);
       if (!termo.equals("NORMAL")){
-        Display display = new Display();
-        display.addLine(Message.wrongVaccine(idVacina, idAnimal));   
-        display.display();
+        _display.addLine(Message.wrongVaccine(idVacina, idAnimal));   
+        _display.display();
       }
     } catch (AnimalNaoExiste e) {
       //nao ha animal com este id

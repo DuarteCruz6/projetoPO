@@ -5,7 +5,6 @@ import hva.core.Arvore;
 import hva.core.Habitat;
 import hva.core.Hotel;
 import hva.core.exception.HabitatNaoExiste;
-import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 
@@ -24,7 +23,6 @@ class DoShowAllTreesInHabitat extends Command<Hotel> {
   
   @Override
   protected void execute() throws CommandException {
-    Display display = new Display();
     //carrega o valor do input recebido no prompt com a chave idHabitat para a variavel idHabitat
     String idHabitat = stringField("idHabitat");
     try {
@@ -49,9 +47,9 @@ class DoShowAllTreesInHabitat extends Command<Hotel> {
         string+="|";
         string+=arvore.getCicloBiologico(_hotel.getEstacao());
         //da print à string
-        display.addLine(string);
+        _display.addLine(string);
       }
-      display.display();
+      _display.display();
     } catch (HabitatNaoExiste e) {
       //nao ha habitat com este id
       throw new UnknownHabitatKeyException(idHabitat);

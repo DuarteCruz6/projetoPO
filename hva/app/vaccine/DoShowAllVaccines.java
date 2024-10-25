@@ -3,7 +3,6 @@ package hva.app.vaccine;
 import hva.core.Especie;
 import hva.core.Hotel;
 import hva.core.Vacina;
-import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 
 /**
@@ -19,7 +18,6 @@ class DoShowAllVaccines extends Command<Hotel> {
   
   @Override
   protected final void execute() {
-    Display display = new Display();
     for(Vacina vacina : _hotel.getAllVacinas()){
       //percorre todas as vacinas do hotel
 
@@ -39,8 +37,8 @@ class DoShowAllVaccines extends Command<Hotel> {
         string+=",";
       }
       //da print à string, exceto o ultimo caracter, pois adiciona sempre um a mais (ou virgula ou um |)
-      display.addLine(string.substring(0,string.length()-1));    
+      _display.addLine(string.substring(0,string.length()-1));    
     }
-    display.display();
+    _display.display();
   }
 }

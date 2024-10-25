@@ -1,7 +1,6 @@
 package hva.core;
 
 //Caduca class
-//Arvore class son
 
 public class Caduca extends Arvore{
 

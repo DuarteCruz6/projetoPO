@@ -4,7 +4,6 @@ import hva.app.exception.UnknownEmployeeKeyException;
 import hva.app.exception.UnknownVeterinarianKeyException;
 import hva.core.Hotel;
 import hva.core.RegistoVacina;
-import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 
 /**
@@ -20,7 +19,6 @@ class DoShowVaccinations extends Command<Hotel> {
   
   @Override
   protected final void execute() throws UnknownVeterinarianKeyException, UnknownEmployeeKeyException {
-    Display display = new Display();
     for (RegistoVacina registo : _hotel.getRegistosVacinas()){
       String string="";
       string+="REGISTO-VACINA";
@@ -31,8 +29,8 @@ class DoShowVaccinations extends Command<Hotel> {
       string+="|";
       string+=registo.getAnimal().getEspecie().getId();
       //da print à string
-      display.addLine(string);
+      _display.addLine(string);
     }
-    display.display();
+    _display.display();
   }
 }

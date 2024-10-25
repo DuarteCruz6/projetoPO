@@ -1,6 +1,8 @@
 package hva.core;
 
-public interface Strategy {
+import java.io.Serializable;
+
+public interface Strategy extends Serializable{
     //implements strategy when calculating an employee's satisfaction
     double execute(ParametrosSatisfacao parametros);
 }

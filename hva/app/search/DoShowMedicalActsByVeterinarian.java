@@ -6,7 +6,6 @@ import hva.core.Hotel;
 import hva.core.RegistoVacina;
 import hva.core.exception.FuncionarioNaoExiste;
 import hva.core.exception.VeterinarioNaoExiste;
-import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 
@@ -25,7 +24,6 @@ class DoShowMedicalActsByVeterinarian extends Command<Hotel> {
   
   @Override
   protected void execute() throws CommandException {
-    Display display = new Display();
     //carrega o valor do input recebido no prompt com a chave idFuncionario para a variavel idVeterinario
     String idVeterinario = stringField("idFuncionario");
     try {
@@ -42,7 +40,7 @@ class DoShowMedicalActsByVeterinarian extends Command<Hotel> {
         string+="|";
         string+=registo.getAnimal().getEspecie().getId();
         //da print à string
-        display.addLine(string);
+        _display.addLine(string);
       }
     } catch (FuncionarioNaoExiste e) {
       //nao ha funcionario com este id
@@ -52,6 +50,6 @@ class DoShowMedicalActsByVeterinarian extends Command<Hotel> {
       throw new UnknownVeterinarianKeyException(idVeterinario);
     }
 
-  display.display();
+  _display.display();
   }
 }

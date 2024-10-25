@@ -1,7 +1,7 @@
 package hva.core;
 import java.util.ArrayList;
 
-public class TratadorStrategy implements Strategy {
+public class TratadorStrategy implements Strategy{
     @Override
     public double execute(ParametrosSatisfacao parametros){
         //calculates the treater's satisfaction

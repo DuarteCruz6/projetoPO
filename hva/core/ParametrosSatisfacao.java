@@ -1,8 +1,9 @@
 package hva.core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ParametrosSatisfacao {
+public class ParametrosSatisfacao implements Serializable{
     private Estacao _estacao;
     private ArrayList<Habitat> _habitats;
     private ArrayList <Especie> _especiesPode;

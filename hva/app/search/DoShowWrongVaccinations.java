@@ -2,7 +2,6 @@ package hva.app.search;
 
 import hva.core.Hotel;
 import hva.core.RegistoVacina;
-import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 /**
@@ -18,7 +17,6 @@ class DoShowWrongVaccinations extends Command<Hotel> {
 
   @Override
   protected void execute() throws CommandException {
-    Display display = new Display();
     for(RegistoVacina registo : _hotel.getRegistosVacinas()){
       //percorre todos os registos de vacina do hotel
 
@@ -34,9 +32,9 @@ class DoShowWrongVaccinations extends Command<Hotel> {
         string+="|";
         string+=registo.getAnimal().getEspecie().getId();
         //da print à string
-        display.addLine(string);
+        _display.addLine(string);
       }
     }
-    display.display();
+    _display.display();
   }
 }

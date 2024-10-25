@@ -1,7 +1,6 @@
 package hva.core;
 
 //Perene class
-//Arvore class son
 
 public class Perene extends Arvore{
     //specific attributes of perenes trees

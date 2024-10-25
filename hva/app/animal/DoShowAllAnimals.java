@@ -2,7 +2,6 @@ package hva.app.animal;
 
 import hva.core.Animal;
 import hva.core.Hotel;
-import pt.tecnico.uilib.Display;
 import pt.tecnico.uilib.menus.Command;
 
 /**
@@ -18,7 +17,6 @@ class DoShowAllAnimals extends Command<Hotel> {
   
   @Override
   protected final void execute() {
-    Display display = new Display();
     for (Animal animal: _hotel.getAllAnimals()){
       //percorre todos os animais do hotel 
       
@@ -43,8 +41,8 @@ class DoShowAllAnimals extends Command<Hotel> {
       string+="|";
       string+=animal.getHabitat().getId();
       //dá print à String
-      display.addLine(string);
+      _display.addLine(string);
     }
-    display.display();
+    _display.display();
   }
 }
