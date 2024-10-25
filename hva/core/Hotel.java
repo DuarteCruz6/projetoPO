@@ -345,6 +345,7 @@ public class Hotel implements Serializable {
     _estacao.skipEstacao();
     for (Arvore arvore : _arvores) {
         arvore.checkAumentarIdade(_estacao);
+        arvore.atualizarEstado(_estacao);
     }
     return _estacao.getEstacaoAtual();
   }

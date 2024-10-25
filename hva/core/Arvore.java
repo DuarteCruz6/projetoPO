@@ -12,20 +12,20 @@ public abstract class Arvore implements Serializable, Comparable<Arvore>{
     private final int _estacaoNasceu;
     private final int _dificuldadeBase;
     private final String _tipo;
-    private final int[] _esforcoSazonal;
-    private final String[] _cicloBiologico;
+    private int _esforcoSazonalAtual;
+    private String _cicloBiologicoAtual;
+    private EstadoArvore _estado;
 
 
-    public Arvore(String id, String nome, int idade, int dificuldadeBase, String tipo, int estacaoNasceu, int[] esforcoSazunal, String[] cicloBiologico){
+    public Arvore(String id, String nome, int idade, int dificuldadeBase, String tipo, Estacao estacaoNasceu){
         //creating a tree
         _id=id;
         _nome=nome;
-        _estacaoNasceu=estacaoNasceu;
+        _estacaoNasceu=estacaoNasceu.getEstacaoAtual();
         _dificuldadeBase=dificuldadeBase;
         _tipo=tipo;
-        _esforcoSazonal=esforcoSazunal;
-        _cicloBiologico=cicloBiologico;
         _idade=idade;
+        atualizarEstado(estacaoNasceu);
     }
 
     double getEsforcoTotal(Estacao estacao){
@@ -72,19 +72,46 @@ public abstract class Arvore implements Serializable, Comparable<Arvore>{
         return _dificuldadeBase;
     }
 
+    public void setEsforcoSazonal(int esforcoSazonalAtual){
+        _esforcoSazonalAtual=esforcoSazonalAtual;
+    }
+
     public int getEsforcoSazonal(Estacao estacao){
-        int estacaoAtual=estacao.getEstacaoAtual();
-        return _esforcoSazonal[estacaoAtual];
+        return _esforcoSazonalAtual;
+    };
+
+    public void setCicloBiologico(String cicloBiologicoAtual){
+        _cicloBiologicoAtual = cicloBiologicoAtual;
     };
 
     public String getCicloBiologico(Estacao estacao){
-        int estacaoAtual=estacao.getEstacaoAtual();
-        return _cicloBiologico[estacaoAtual];
+        return _cicloBiologicoAtual;
     };
+
+    private EstadoArvore getEstadoPorEstacao(Estacao estacao) {
+        switch (estacao.getEstacaoAtual()) {
+            case 0 -> {
+                return new Primavera();
+            }
+            case 1 -> {
+                return new Verao();
+            }
+            case 2 -> {
+                return new Outono();
+            }
+        }
+        return new Inverno();
+    }
+
+    public final void atualizarEstado(Estacao estacao) {
+        _estado = getEstadoPorEstacao(estacao);
+        _estado.atualizarEstado(this); // Chama o método do estado atual
+    }
 
     @Override
     public int compareTo(Arvore outraArvore){
         //returns the correct lexicographic order when listing trees
         return _id.toLowerCase().compareTo(outraArvore.getId().toLowerCase());
     }
+    
 }
